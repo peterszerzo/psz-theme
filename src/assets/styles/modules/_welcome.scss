@@ -1,0 +1,103 @@
+.welcome {
+
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+
+	&__content {
+		background-color: get-color(base);
+		transition: all 0.5s;
+		width: 100%;
+		height: 100%;
+	}
+
+	$c: darken(map-get($colors, purple), 7);
+
+	&__summary {
+		$w: 286px;
+		$h: 155px;
+		z-index: 2;
+		top: calc(50% - #{$h}/2);
+		left: calc(50% - #{$w}/2);
+		position: fixed;
+		display: block;
+		border: 2px solid rgba(255, 255, 255, 0);
+		padding: 20px 16px;
+		width: $w;
+		height: $h;
+		border-radius: 16px;
+		margin: auto;
+		background-color: $c;
+		opacity: 0.95;
+		@include transition(all 0.5s);
+		@include animation(bounce 4.5s linear infinite);
+
+		&:hover {
+			opacity: 0.99;
+			border: 2px solid rgba(255, 255, 255, 1);
+			transition: all 0.5s;
+		}
+
+		svg {
+			fill: white;
+		}
+
+	}
+
+
+	&__globe, &__background {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		svg, canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+
+	&__globe {
+		z-index: 1;
+	}
+
+	&__background {
+		z-index: 0;
+		opacity: 0.4;
+		background-image: url('/assets/images/sky-1200.jpg');
+		background-position: 50% 50%;
+		background-size: cover;
+	}
+
+	&__message {
+		z-index: 2;
+		transition: all 0.75s;
+		position: absolute;
+		bottom: 20px;
+		color: white;
+		text-align: center;
+		width: 100%;
+		padding: 0 60px;
+		@include font-size(16px);
+		opacity: 0.7;
+		font-family: 'PT Sans';
+	}
+
+	&__geopath {
+		cursor: pointer;
+		$c: white;
+		stroke: $c;
+		fill: $c;
+		stroke-width: 0.2px;
+		transition: all 0.2s;
+
+		&--active, &:hover {
+			$c: darken(map-get($colors, purple), 7);
+			fill: $c;
+			stroke: $c;
+			transition: all 0.2s;
+		}
+
+	}
+
+}

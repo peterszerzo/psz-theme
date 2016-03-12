@@ -1,0 +1,24 @@
+.modal {
+	z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	background-color: rgba(0, 0, 0, 0.3);
+
+	&__content {
+		width: 300px;
+		height: 200px;
+		margin: auto;
+		border-radius: 10px;
+		@include font-size(44px);
+		padding: 65px;
+		color: white;
+		background-color: map-get($colors, base);
+		display: table;
+		text-align: center;
+		vertical-align: middle;
+	}
+}

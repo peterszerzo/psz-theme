@@ -1,0 +1,48 @@
+.post-grid {
+	$height: 200px;
+	width: 100%;
+
+	&__wrapper {
+		width: 100%;
+		height: $height;
+	}
+
+	&__element {
+		width: 100%;
+		height: $height;
+		position: relative;
+		display: flex;
+		opacity: 1;
+
+		&__background, &__overlay {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		&__background {
+			filter: blur(3px);
+			background-position: 50% 50%;
+			background-size: 100%;
+		}
+
+		&__overlay {
+			transition: all 0.5s;
+		}
+
+		&:hover {
+			background-size: 105%;
+			transition: all 0.5s;
+		}
+
+		&__title {
+			position: relative;
+			@include font-size(32px);
+			font-weight: bold;
+			color: white;
+			margin: auto;
+		}
+	}
+}

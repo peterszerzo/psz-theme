@@ -1,0 +1,43 @@
+.form {
+
+	width: 100%;
+	padding: 50px 0;
+	max-width: 600px;
+	margin: auto;
+
+	input, select, textarea, button {
+		outline: none;
+		border: 1px solid #555;
+	}
+
+	input, textarea {
+		width: 100%;
+		@include font-size(24px);
+		padding: 8px 5px;
+		&:focus {
+			background-color: #ddd;
+		}
+	}
+
+	textarea {
+		height: 400px;
+	}
+
+
+	label {
+		font-family: 'PT Sans';
+		@include font-size(44px);
+		margin: 10px 0;
+	}
+
+	&__hint {
+		font-family: 'PT Serif';
+		@include font-size(24px);
+		margin: 10px 0;
+	}
+
+	&__wrapper {
+		margin: 50px 0;
+	}
+	
+}

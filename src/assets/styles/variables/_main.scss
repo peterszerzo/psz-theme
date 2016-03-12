@@ -1,0 +1,46 @@
+$colors: (
+	base: #001721,
+	white: #FFFFFF,
+	blue: #2D375D,
+	greenish-blue: #0E3647,
+	purple: #4F3F91,
+	light-purple: #9695A8
+);
+
+$color-palette: (
+	#2F6690,
+	#3A7CA5,
+	#D9DCD6,
+	#16425B,
+	#81C3D7
+);
+
+@function get-palette($index: 1) {
+	@return nth($color-palette, $index);
+}
+
+@function get-color($key) {
+	@return map-get($colors, $key);
+}
+
+@for $i from 1 through 5 {
+	.bg-c-#{$i} {
+		background-color: transparentize(get-palette($i), 0.1);
+		&:hover {
+			background-color: get-palette($i);
+		}
+	}
+}
+
+// GEOMETRY
+
+// breakpoint
+$breakpoint: 780px;
+
+// default grid padding
+$grid-pad: 80px;
+
+$project: 250px;
+
+$header-height: 70px;
+$icon-size: 25px;
