@@ -1,0 +1,15 @@
+.posts {
+  width: 100%;
+
+  &__title {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    margin: 200px 0;
+    @include font-size(80px);
+  }
+
+  &__list {
+    padding: 120px 0;
+  }
+}

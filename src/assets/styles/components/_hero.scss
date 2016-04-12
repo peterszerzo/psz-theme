@@ -1,0 +1,95 @@
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  content: '';
+  color: white;
+  @include standard-shadow;
+
+  &__background,
+  &__overlay,
+  &__title-bar {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+  }
+
+  &__background {
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+
+  &__overlay {
+    @include transition(all 0.5s);
+    background-color: map-get($colors, base);
+    opacity: 0.6;
+  }
+
+  &__top-bar {
+    width: 100%;
+    position: absolute;
+    top: 25px;
+  }
+
+  &__bottom-bar {
+    width: 100%;
+    position: absolute;
+    bottom: 25px;
+  }
+
+  &__title-bar {
+    display: flex;
+
+    &__content {
+      margin: auto;
+      padding: 0 30px;
+      font-family: 'PT Sans';
+
+      h1,
+      h2 {
+        font-weight: bold;
+      }
+    }
+  }
+
+  &__text {
+    position: absolute;
+    bottom: 20%;
+    left: 25px;
+    font-family: 'PT Sans';
+    font-weight: bold;
+    color: white;
+    @include font-size(64px);
+
+    @include bp-w(768px) {
+      left: calc(50% - #{768px / 2});
+      font-size: 80px;
+    }
+  }
+
+  &__arrow {
+    $width: 200px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    left: calc(50% - #{$width / 2});
+    opacity: 0.6;
+    transition: all 0.5s;
+
+		animation: light-bounce 4.5s linear infinite;
+
+    svg {
+      width: $width;
+      height: 50px;
+      fill: white;
+    }
+
+    &:hover {
+      opacity: 1;
+      transition: all 0.5s;
+    }
+  }
+}

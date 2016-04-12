@@ -8,16 +8,23 @@ import Footer from './footer/root.jsx'
 class Layout extends Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    windowWidth: PropTypes.number,
+    windowHeight: PropTypes.number,
+    scrollTop: PropTypes.number
   }
 
   static childContextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    windowWidth: PropTypes.number,
+    windowHeight: PropTypes.number,
+    scrollTop: PropTypes.number
   }
 
   getChildContext() {
     return {
-      router: this.context.router
+      router: this.context.router,
+      ...this.props.ui
     }
   }
 

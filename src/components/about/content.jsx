@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import marked from 'marked'
 
-import Hero from './../elements/hero.jsx'
+import Hero from './../hero/root.jsx'
 import greetings from './greetings.json'
 
 export default class AboutContent extends Component {
@@ -19,8 +19,8 @@ export default class AboutContent extends Component {
     return (
       <div>
         <Hero
-          text={ greetings[this.state.greetingIndex] }
-          image={ post ? post.image : null }
+          text={greetings[this.state.greetingIndex]}
+          image={post ? post.image : null}
         />
         <div
           className='static'

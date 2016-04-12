@@ -1,0 +1,84 @@
+.header {
+	background-color: transparentize(get-color(base), 0.1);
+	@include standard-shadow;
+	overflow: visible;
+	position: fixed;
+	justify-content: space-between;
+	display: flex;
+	width: 100%;
+	height: $header-height;
+	top: 0;
+	transition: all 0.2s;
+	color: white;
+	z-index: 100;
+
+	&--transparent {
+		background-color: rgba(255, 255, 255, 0);
+		box-shadow: none;
+	}
+
+	&__icon {
+		height: $header-height;
+		width: $header-height;
+		cursor: pointer;
+		padding: ($header-height - $icon-size) / 2;
+		transition: all 0.5s;
+		opacity: 0.7;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		svg {
+			width: $icon-size;
+			height: $icon-size;
+			fill: white;
+		}
+	}
+
+	&__nav {
+		z-index: 100;
+		height: $header-height;
+		overflow: visible;
+		float: right;
+		width: auto;
+		float: auto;
+		text-align: right;
+		padding: 0;
+
+		&__item {
+			width: 100px;
+			float: right;
+			height: $header-height;
+			padding: 0;
+		}
+
+		&__item {
+			z-index: 100;
+			display: table;
+
+			.header--discrete & {
+				display: none;
+			}
+
+			a {
+				height: 100%;
+				padding: 0 0px;
+				display: table-cell;
+				position: relative;
+				text-align: center;
+				vertical-align: middle;
+				font-family: 'PT Sans';
+				@include font-size(18px);
+				top: 1px;
+			}
+
+			&:hover, &--active {
+				border-bottom: 4px solid lighten(map-get($colors, purple), 7);
+				a {
+					top: 3px; opacity: 1;
+				}
+			}
+		}
+	}
+}

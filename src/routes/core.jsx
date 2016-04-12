@@ -1,23 +1,23 @@
-import React from 'react'
-import {Route, IndexRoute} from 'react-router'
+import React from 'react';
+import {Route, IndexRoute} from 'react-router';
 
-import Layout from './../components/layout.jsx'
-import Welcome from './../components/welcome/root.jsx'
-import About from './../components/about/root.jsx'
-import Now from './../components/now/root.jsx'
-import Index from './../components/posts/index.jsx'
-import Show from './../components/posts/show.jsx'
+import Layout from './../components/layout.jsx';
+import Welcome from './../components/welcome/root.jsx';
+import About from './../components/about/root.jsx';
+import Now from './../components/now/root.jsx';
+import Index from './../components/posts/index.jsx';
+import Show from './../components/posts/show.jsx';
 
 function ProjectsIndex(props) {
-  return <Index activeTagName='project'/>
+  return <Index activeTagName='project' title='Projects'/>;
 }
 
 function BlogIndex(props) {
-  return <Index activeTagName='blog'/>
+  return <Index activeTagName='blog' title='Blog'/>;
 }
 
 function DevBlogIndex(props) {
-  return <Index activeTagName='devblog'/>
+  return <Index activeTagName='devblog' title='Dev blog'/>;
 }
 
 export default (
@@ -30,4 +30,4 @@ export default (
     <Route path='/devblog' component={DevBlogIndex}/>
     <Route path='/:slug' component={Show}/>
   </Route>
-)
+);

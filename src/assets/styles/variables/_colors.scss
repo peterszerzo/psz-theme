@@ -1,0 +1,32 @@
+$colors: (
+	base: darken(#044B7F, 15),
+	white: #FFFFFF,
+	purple: #3B2863
+);
+
+$color-palette: (
+	#2F6690,
+	#3A7CA5,
+	#B3B9AD,
+	#16425B,
+	#81C3D7,
+	#537D99,
+	#9A9B58,
+	#395E66,
+	#DBD56E,
+	#B3B9AD
+);
+
+@function get-palette($index: 1) {
+	@return nth($color-palette, $index);
+}
+
+@function get-color($key) {
+	@return map-get($colors, $key);
+}
+
+@for $i from 1 through 10 {
+	.bg-c-#{$i} {
+		background-color: get-palette($i);
+	}
+}

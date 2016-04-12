@@ -1,38 +1,41 @@
-import path from 'path'
-import webpack from 'webpack'
+import path from 'path';
+import webpack from 'webpack';
+import autoprefixer from 'autoprefixer';
 
-const {NODE_ENV} = process.env
+const {NODE_ENV} = process.env;
 
-const commonPlugins = []
+const corePlugins = [];
+
+const developmentPlugins = [
+  new webpack.NoErrorsPlugin()
+];
 
 const productionPlugins = [
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': '"production"'
+  }),
+  new webpack.optimize.DedupePlugin(),
   new webpack.optimize.UglifyJsPlugin({
     mangle: {
       except: [ '$super', '$', 'exports', 'require' ]
     }
-  }),
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': '"production"'
   })
-]
+];
 
-const usedPlugins = NODE_ENV === 'development' ? [...commonPlugins] : [...commonPlugins, ...productionPlugins]
+const usedPlugins = NODE_ENV === 'development' ? [...corePlugins, ...developmentPlugins] : [...corePlugins, ...productionPlugins];
 
 export default {
-
-  entry: './src/assets/scripts/bundle.js',
-
+  entry: [
+    './src/index.js'
+  ],
   output: {
     path: path.resolve('./assets/js'),
-    publicPath: 'http://localhost:3001/',
+    publicPath: 'http://0.0.0.0:3001/',
     filename: 'bundle.js',
     sourceMapFilename: 'bundle.js.map'
   },
-
   module: {
-
     loaders: [
-
       {
         test: /(\.js)|(\.jsx)$/,
         loader: 'babel-loader',
@@ -41,22 +44,23 @@ export default {
         },
         exclude: /node_modules/
       },
-
       {
         test: /\.json$/,
         loader: 'json-loader'
       },
-
       {
         test: /\.scss$/,
-        loaders: [ 'style', 'css', 'sass' ]
+        loaders: ['style', 'css', 'postcss', 'sass']
       }
-
-    ]
+    ],
+    postcss: () => {
+      return [
+        autoprefixer({
+          browsers: 'last 2 versions'
+        })
+      ];
+    }
   },
-
   devtool: NODE_ENV === 'development' ? 'source-map' : null,
-
   plugins: usedPlugins
-
-}
+};

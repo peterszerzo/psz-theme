@@ -1,22 +1,16 @@
 import express from 'express'
 
-import postSummaries from './post_summaries.json'
-import post from './post.js'
+import siteInfo from './../src/info.json'
 
 const app = express()
 
+app.set('views', __dirname + '/views')
+app.set('view engine', 'jade')
+
 app.use(express.static(__dirname + '/../assets'))
 
-app.get('/testapi/posts', function(req, res) {
-  res.json(postSummaries)
-})
-
-app.get('/testapi/posts/slug/:slug', function(req, res) {
-  res.json(post(req.params.slug))
-})
-
 app.get('*', function(req, res) {
-  res.sendFile(__dirname + '/index.html')
+  res.render('index', siteInfo)
 })
 
 app.listen(1999, (err) => {

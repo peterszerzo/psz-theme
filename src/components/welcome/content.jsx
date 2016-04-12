@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-import Sign from './../elements/sign.jsx'
+import Banner from './banner.jsx'
 import Animation from './globe_animation/root.jsx'
 
 const FADE_OUT_IN = 4500
@@ -15,37 +15,35 @@ export default class WelcomeContent extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      isMessageShowing: true,
+      shouldMessageShowOnHover: true
+    }
     this.navigateToRandomPost = this.navigateToRandomPost.bind(this)
     this.triggerMessage = this.triggerMessage.bind(this)
     this.hideMessage = this.hideMessage.bind(this)
     this.allowMessageShow = this.allowMessageShow.bind(this)
     this.hideMessageTimeout = null
     this.allowMessageShowTimeout = null
-    this.state = {
-      isMessageShowing: true,
-      shouldMessageShowOnHover: true
-    }
   }
 
   render() {
-    const { ui } = this.props
+    const {ui} = this.props
     return (
       <div className='welcome'>
-        <div className='welcome__content'>
-          <div className='welcome__background'></div>
-          <div className='welcome__globe'>
-            <Animation
-              width={ui.windowWidth}
-              height={ui.windowHeight}
-              navigateToRandomPost={this.navigateToRandomPost}
-              triggerMessage={this.triggerMessage}
-            />
-          </div>
-          <Link className="welcome__summary" to='/projects'>
-            <Sign />
-          </Link>
-          { this.renderMessage() }
+        <div className='welcome__background'/>
+        <div className='welcome__globe'>
+          <Animation
+            width={ui.windowWidth}
+            height={ui.windowHeight}
+            navigateToRandomPost={this.navigateToRandomPost}
+            triggerMessage={this.triggerMessage}
+          />
         </div>
+        <Link className='welcome__summary' to='/projects'>
+          <Banner/>
+        </Link>
+        {this.renderMessage()}
       </div>
     )
   }

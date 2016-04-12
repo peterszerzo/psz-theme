@@ -42,9 +42,12 @@
     "no-unused-vars": [2, {"vars": "all", "args": "none"}],
     "no-throw-literal": 2,
     "quotes": [2, "single"],
-    "semi": [2, "never"],
+    "semi": [2, "always"],
     "strict": [2, "global"],
     "react/jsx-uses-react": [2],
     "react/jsx-uses-vars": [2]
+  },
+  "globals": {
+    "ghost": true
   }
 }

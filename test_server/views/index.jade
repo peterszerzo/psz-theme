@@ -1,0 +1,15 @@
+html
+  head
+    title Peter Szerzo makes a website
+    meta(charset='utf-8')
+    script(src='/js/bundle.js')
+    script(src='#{siteUrl}/shared/ghost-url.min.js')
+    script.
+      ghost.init({
+        clientId: "ghost-frontend",
+        clientSecret: "#{ghostClientSecret}"
+      });
+  body
+    div(id='site')
+    script.
+      window.startPSz();

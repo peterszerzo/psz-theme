@@ -1,0 +1,12 @@
+.loader {
+  width: 100%;
+  text-align: center;
+  padding-top: $header-height + 30px;
+  height: 100vh;
+
+  img {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+  }
+}
