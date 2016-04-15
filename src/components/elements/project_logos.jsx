@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 const noFill = {
   fill: 'none'
-}
+};
 
 export function Neutral(props) {
   return (
