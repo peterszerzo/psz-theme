@@ -5,7 +5,7 @@ export default function fetchGhost(ghostApiUrl, ghostApiOptions) {
   if (process.env.NODE_ENV === 'development') {
     url = `${siteInfo.siteUrl}${url}`;
   }
-  return fetch(url, {mode: 'no-cors'})
+  return fetch(url, {mode: 'cors'})
     .then(res => {
       return res.json();
     })

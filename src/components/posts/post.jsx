@@ -9,9 +9,9 @@ function Post(props) {
   if (!post) {
     return <Loader />
   }
-  const {markdown, title, image} = post
+  const {markdown, title, image, html} = post
   const metaDescription = post.meta_description
-  const body = markdown ? <div className='static' dangerouslySetInnerHTML={{__html: marked(markdown)}}/> : null
+  const body = markdown ? <div className='static' dangerouslySetInnerHTML={{__html: html || marked(markdown)}}/> : null
   return (
     <div>
       <Hero

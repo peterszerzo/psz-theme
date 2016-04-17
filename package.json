@@ -49,8 +49,9 @@
     "webpack": "^1.12.13"
   },
   "dependencies": {
+    "babel-polyfill": "^6.7.4",
     "classnames": "^2.2.3",
-    "es6-promise": "^3.1.2",
+    "domready": "^1.0.8",
     "history": "^2.0.0",
     "jquery": "^2.2.2",
     "marked": "^0.3.5",

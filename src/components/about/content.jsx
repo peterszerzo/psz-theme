@@ -15,7 +15,7 @@ export default class AboutContent extends Component {
 
   render() {
     const {post} = this.props;
-    const {markdown} = post || {};
+    const {markdown, html} = post || {};
     return (
       <div>
         <Hero
@@ -24,7 +24,7 @@ export default class AboutContent extends Component {
         />
         <div
           className='static'
-          dangerouslySetInnerHTML={{__html: marked(markdown || '', {sanitize: true})}}
+          dangerouslySetInnerHTML={{__html: html || marked(markdown, {sanitize: true})}}
         />
       </div>
     );

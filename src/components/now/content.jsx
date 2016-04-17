@@ -9,7 +9,7 @@ function NowContent(props) {
   if (!post) {
     return <Loader/>;
   }
-  const {title, markdown, image} = post;
+  const {html, title, markdown, image} = post;
   return (
     <div>
       <Hero
@@ -18,7 +18,7 @@ function NowContent(props) {
       />
       <div
         className='static'
-        dangerouslySetInnerHTML={{__html: marked(markdown, {sanitize: true})}}
+        dangerouslySetInnerHTML={{__html: html || marked(markdown, {sanitize: true})}}
       />
     </div>
   );
