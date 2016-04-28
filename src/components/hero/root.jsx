@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react';
+import {findDOMNode} from 'react-dom';
+// import Velocity from 'velocity-animate';
 
 import siteInfo from './../../info.json';
 import {Down} from './../elements/icons.jsx';
 
-import $ from 'jquery';
+// import $ from 'jquery';
 
 export default class Hero extends Component {
 
@@ -95,8 +97,13 @@ export default class Hero extends Component {
   }
 
   scroll() {
+    const root = findDOMNode(this);
     const node = document.getElementsByClassName('wrapper')[0];
-    // node.scrollTop = this.context.windowHeight
-    $(node).animate({scrollTop: this.context.windowHeight - 70}, 1000);
+    const offset = this.context.windowHeight - 70;
+    // Velocity(root, 'scroll', {
+    //   duration: 1000,
+    //   offset: -100
+    // });
+    $(node).animate({scrollTop: offset}, 1000);
   }
 }

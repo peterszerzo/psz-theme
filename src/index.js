@@ -10,6 +10,21 @@ import reducer from './reducers/index.js';
 
 import './assets/styles/site.scss';
 
+function getInitialState() {
+  let stateFromServer = window.__STATE_FROM_SERVER__;
+  if (!stateFromServer) {return {};}
+  try {
+    let postHtmlTemplate = document.getElementById('post-html-template');
+    let html = postHtmlTemplate.innerHTML;
+    let slug = postHtmlTemplate.getAttribute('data-post-slug');
+    stateFromServer.entities.posts.bySlug[slug].data.html = html;
+    return stateFromServer;
+  } catch(err) {
+    stateFromServer = {};
+  }
+  return stateFromServer;
+}
+
 domReady(() => {
   // Developer signature
   console.log('Hi, Mom!');
@@ -17,7 +32,7 @@ domReady(() => {
   require('babel-polyfill');
   require('whatwg-fetch');
 
-  const store = createStore(reducer, window.__STATE_FROM_SERVER__);
+  const store = createStore(reducer, getInitialState());
 
   const reduxRouter = (
     <Provider store={store}>

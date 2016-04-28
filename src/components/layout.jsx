@@ -35,7 +35,6 @@ class Layout extends Component {
   }
 
   render() {
-    console.log(this.props.entities);
     return (
       <div className='wrapper' onScroll={this.updateScrollTop}>
         <Header
