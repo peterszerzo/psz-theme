@@ -15,7 +15,11 @@ function Post(props) {
   }
   const {markdown, title, image, html} = post;
   const metaDescription = post.meta_description;
-  const body = (markdown || html) ? <div className='static' dangerouslySetInnerHTML={{__html: html || marked(markdown)}}/> : null;
+  const body = (markdown || html) ?
+    <div
+      className='static'
+      dangerouslySetInnerHTML={{__html: html || marked(markdown)}}
+    /> : null;
   return (
     <div>
       <Hero

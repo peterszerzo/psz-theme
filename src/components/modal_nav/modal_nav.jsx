@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
-import {Falafel} from './../elements/icons.jsx';
 
-import './modal-nav.scss';
+import './modal_nav.scss';
+import {Falafel} from '../icons/icons.jsx';
 
 function ModalNav(props) {
 

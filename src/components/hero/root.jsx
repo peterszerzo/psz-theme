@@ -2,8 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import $ from 'jquery';
 
-import siteInfo from './../../info.json';
-import {Down} from './../elements/icons.jsx';
+import siteInfo from '../../info.json';
+import {Down} from '../icons/icons.jsx';
 
 import './hero.scss';
 

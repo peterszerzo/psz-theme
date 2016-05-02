@@ -2,9 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
 import {Link} from 'react-router';
 
-import {MainLogo, Falafel} from './../elements/icons.jsx';
+import {MainLogo, Falafel} from '../icons/icons.jsx';
+import ModalNav from '../modal_nav/modal_nav.jsx';
 import buttons from './buttons.json';
-import ModalNav from './modal_nav.jsx';
 
 import './header.scss';
 

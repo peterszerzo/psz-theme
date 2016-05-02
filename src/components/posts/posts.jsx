@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import Loader from '../loader/loader.jsx';
 import Hero from '../hero/root.jsx';
 import PostSummariesContainer from '../../containers/post_summaries_container.jsx';
+import PostLink from '../post_link/post_link.jsx';
 
 import './posts.scss';
 
@@ -16,6 +17,7 @@ function Posts(props) {
   }
 
   const list = props.posts.map((post, i) => {
+    return <PostLink post={post} index={i}/>
     const publishDate = moment(post.published_at).format('MMMM YYYY');
     const viewUrl = `/${post.slug}`;
     const overlayClassName = classNames({

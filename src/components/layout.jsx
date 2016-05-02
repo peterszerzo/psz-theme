@@ -2,8 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
 
-import Header from './header/root.jsx';
-import Footer from './footer/root.jsx';
+import Header from './header/header.jsx';
+import Footer from './footer/footer.jsx';
 
 class Layout extends Component {
 

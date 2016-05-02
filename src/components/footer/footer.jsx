@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as icons from './../elements/icons.jsx';
+import * as icons from '../icons/icons.jsx';
 import links from './links.json';
 import messages from './messages.json';
 
