@@ -3,10 +3,13 @@ import {Link} from 'react-router';
 import moment from 'moment';
 import classNames from 'classnames';
 
-import Loader from './../elements/loader.jsx';
-import Hero from './../hero/root.jsx';
+import Loader from '../loader/loader.jsx';
+import Hero from '../hero/root.jsx';
+import PostSummariesContainer from '../../containers/post_summaries_container.jsx';
 
-export default function Index(props) {
+import './posts.scss';
+
+function Posts(props) {
 
   if (!props) {
     return <Loader/>;
@@ -40,6 +43,14 @@ export default function Index(props) {
   );
 }
 
-Index.propTypes = {
+Posts.propTypes = {
   posts: PropTypes.array.isRequired
 };
+
+export default function(props) {
+  return (
+    <PostSummariesContainer activeTagName={props.activeTagName}>
+      <Posts {...props}/>
+    </PostSummariesContainer>
+  );
+}

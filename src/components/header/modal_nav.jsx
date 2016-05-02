@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import {Falafel} from './../elements/icons.jsx';
 
+import './modal-nav.scss';
+
 function ModalNav(props) {
 
   const style = props.isExpanded ? {display: 'block'} : {display: 'none'};

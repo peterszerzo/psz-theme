@@ -1,11 +1,11 @@
-import React from 'react'
-import {Link} from 'react-router'
+import React from 'react';
+import {Link} from 'react-router';
 
-import Banner from './banner.jsx'
-import Animation from './globe_animation/root.jsx'
+import Banner from './banner.jsx';
+import Animation from './globe_animation/root.jsx';
 
-const FADE_OUT_IN = 4500
-const DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000
+const FADE_OUT_IN = 4500;
+const DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000;
 
 export default class WelcomeContent extends React.Component {
 
@@ -14,21 +14,21 @@ export default class WelcomeContent extends React.Component {
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isMessageShowing: true,
       shouldMessageShowOnHover: true
-    }
-    this.navigateToRandomPost = this.navigateToRandomPost.bind(this)
-    this.triggerMessage = this.triggerMessage.bind(this)
-    this.hideMessage = this.hideMessage.bind(this)
-    this.allowMessageShow = this.allowMessageShow.bind(this)
-    this.hideMessageTimeout = null
-    this.allowMessageShowTimeout = null
+    };
+    this.navigateToRandomPost = this.navigateToRandomPost.bind(this);
+    this.triggerMessage = this.triggerMessage.bind(this);
+    this.hideMessage = this.hideMessage.bind(this);
+    this.allowMessageShow = this.allowMessageShow.bind(this);
+    this.hideMessageTimeout = null;
+    this.allowMessageShowTimeout = null;
   }
 
   render() {
-    const {ui} = this.props
+    const {ui} = this.props;
     return (
       <div className='welcome'>
         <div className='welcome__background'/>
@@ -45,49 +45,50 @@ export default class WelcomeContent extends React.Component {
         </Link>
         {this.renderMessage()}
       </div>
-    )
+    );
   }
 
   renderMessage() {
-    const style = this.state.isMessageShowing ? {opacity: 1} : {opacity: 0}
+    const style = this.state.isMessageShowing ? {opacity: 1} : {opacity: 0};
     return (
       <div className='welcome__message' style={style}>
         {'hey, welcome! click a triangle for random content :)'}
       </div>
-    )
+    );
   }
 
   navigateToRandomPost() {
-    const {posts} = this.props
-    const {router} = this.context
-    let randomPostSlug
+    const {posts} = this.props;
+    const {router} = this.context;
+    let randomPostSlug;
     if (posts) {
-      randomPostSlug = posts[Math.floor(posts.length * Math.random())].slug
+      randomPostSlug = posts[Math.floor(posts.length * Math.random())].slug;
     }
     if (randomPostSlug) {
-      let url = `/${randomPostSlug}`
-      router.push(url)
+      let url = `/${randomPostSlug}`;
+      router.push(url);
     }
   }
 
   triggerMessage() {
-    if (!this.state.shouldMessageShowOnHover) { return }
+    if (!this.state.shouldMessageShowOnHover) {
+      return;}
     this.setState({
       isMessageShowing: true,
       shouldMessageShowOnHover: true
-    })
-    if (this.hideMessageTimeout) { clearTimeout(this.hideMessageTimeout) }
-    if (this.allowMessageShowTimeout) { clearTimeout(this.allowMessageShowTimeout) }
-    this.hideMessageTimeout = setTimeout(this.hideMessage, FADE_OUT_IN)
-    this.allowMessageShowTimeout = setTimeout(this.allowMessageShow, DO_NOT_REAPPEAR_ON_HOVER_FOR)
+    });
+    if (this.hideMessageTimeout) { clearTimeout(this.hideMessageTimeout); }
+    if (this.allowMessageShowTimeout) { clearTimeout(this.allowMessageShowTimeout); }
+    this.hideMessageTimeout = setTimeout(this.hideMessage, FADE_OUT_IN);
+    this.allowMessageShowTimeout = setTimeout(this.allowMessageShow, DO_NOT_REAPPEAR_ON_HOVER_FOR);
   }
 
   hideMessage() {
-    this.setState({isMessageShowing: false})
+    this.setState({isMessageShowing: false});
   }
 
   allowMessageShow() {
-    this.setState({shouldMessageShowOnHover: true})
+    this.setState({shouldMessageShowOnHover: true});
   }
 
 }

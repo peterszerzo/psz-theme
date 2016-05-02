@@ -3,9 +3,9 @@ import marked from 'marked';
 
 import Hero from './../hero/root.jsx';
 import greetings from './greetings.json';
+import PostContainer from '../../containers/post_container.jsx';
 
-export default class AboutContent extends Component {
-
+class About extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,5 +45,12 @@ export default class AboutContent extends Component {
       clearInterval(this.greetingChangeInterval);
     }
   }
+}
 
+export default function(props) {
+  return (
+    <PostContainer slug='about'>
+      <About/>
+    </PostContainer>
+  );
 }

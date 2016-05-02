@@ -4,6 +4,8 @@ import * as icons from './../elements/icons.jsx';
 import links from './links.json';
 import messages from './messages.json';
 
+import './footer.scss';
+
 export default class Footer extends React.Component {
 
   constructor(props) {

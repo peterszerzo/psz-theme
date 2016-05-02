@@ -1,7 +1,7 @@
 import React from 'react';
 import marked from 'marked';
 
-import Loader from './../elements/loader.jsx';
+import Loader from './../loader/loader.jsx';
 import Hero from './../hero/root.jsx';
 
 function NowContent(props) {

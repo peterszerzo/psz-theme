@@ -3,21 +3,21 @@ import {Route, IndexRoute} from 'react-router';
 
 import Layout from './../components/layout.jsx';
 import Welcome from './../components/welcome/root.jsx';
-import About from './../components/about/root.jsx';
+import About from './../components/about/about.jsx';
 import Now from './../components/now/root.jsx';
-import Index from './../components/posts/index.jsx';
-import Show from './../components/posts/show.jsx';
+import Posts from './../components/posts/posts.jsx';
+import Post from './../components/posts/post.jsx';
 
-function ProjectsIndex(props) {
-  return <Index activeTagName='project' title='Projects'/>;
+function ProjectPosts(props) {
+  return <Posts activeTagName='project' title='Projects'/>;
 }
 
-function BlogIndex(props) {
-  return <Index activeTagName='blog' title='Blog'/>;
+function BlogPosts(props) {
+  return <Posts activeTagName='blog' title='Blog'/>;
 }
 
-function DevBlogIndex(props) {
-  return <Index activeTagName='devblog' title='Dev blog'/>;
+function DevBlogPosts(props) {
+  return <Posts activeTagName='devblog' title='Dev blog'/>;
 }
 
 export default (
@@ -25,9 +25,9 @@ export default (
     <IndexRoute component={Welcome}/>
     <Route path='/about' component={About}/>
     <Route path='/now' component={Now}/>
-    <Route path='/projects' component={ProjectsIndex}/>
-    <Route path='/blog' component={BlogIndex}/>
-    <Route path='/devblog' component={DevBlogIndex}/>
-    <Route path='/:slug' component={Show}/>
+    <Route path='/projects' component={ProjectPosts}/>
+    <Route path='/blog' component={BlogPosts}/>
+    <Route path='/devblog' component={DevBlogPosts}/>
+    <Route path='/:slug' component={Post}/>
   </Route>
 );

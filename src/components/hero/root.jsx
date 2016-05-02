@@ -5,7 +5,7 @@ import $ from 'jquery';
 import siteInfo from './../../info.json';
 import {Down} from './../elements/icons.jsx';
 
-// import $ from 'jquery';
+import './hero.scss';
 
 export default class Hero extends Component {
 

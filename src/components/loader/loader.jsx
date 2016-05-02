@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './loader.scss';
+
 export default function Loader(props, context) {
   return (
     <div className='loader'>

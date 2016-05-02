@@ -8,7 +8,7 @@ import {Provider} from 'react-redux';
 import routes from './routes/routes.jsx';
 import reducer from './reducers/index.js';
 
-import './assets/styles/site.scss';
+import './styles/site.scss';
 
 function getInitialState() {
   if (process.env.NODE_ENV === 'development') {

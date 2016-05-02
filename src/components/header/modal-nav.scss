@@ -1,3 +1,6 @@
+@import '../../styles/variables/manifest';
+@import '../../styles/mixins/manifest';
+
 .modal-nav {
   position: fixed;
   top: 0;
@@ -8,7 +11,7 @@
 
   &__items {
     position: absolute;
-    top: $header-height + 0px;
+    top: $header-height;
     right: 23px;
 
     li {
@@ -16,7 +19,7 @@
       text-align: right;
 
       &:first-of-type {
-        margin-top: 0px;
+        margin-top: 0;
       }
     }
   }

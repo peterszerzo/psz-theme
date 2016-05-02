@@ -1,3 +1,6 @@
+@import '../../styles/variables/manifest';
+@import '../../styles/mixins/manifest';
+
 .hero {
   position: relative;
   width: 100vw;
@@ -78,8 +81,7 @@
     left: calc(50% - #{$width / 2});
     opacity: 0.6;
     transition: all 0.5s;
-
-		animation: light-bounce 4.5s linear infinite;
+    animation: light-bounce 4.5s linear infinite;
 
     svg {
       width: $width;

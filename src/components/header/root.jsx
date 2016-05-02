@@ -6,6 +6,8 @@ import {MainLogo, Falafel} from './../elements/icons.jsx';
 import buttons from './buttons.json';
 import ModalNav from './modal_nav.jsx';
 
+import './header.scss';
+
 export default class Header extends Component {
 
   static contextTypes = {

@@ -1,12 +1,15 @@
 import React from 'react';
 import marked from 'marked';
 
-import Loader from '../elements/loader.jsx';
+import Loader from '../loader/loader.jsx';
 import Hero from '../hero/root.jsx';
 
-export default function Post(props) {
+import './post.scss';
+
+import PostContainer from '../../containers/post_container.jsx';
+
+function Post(props) {
   const {post} = props;
-  console.log(post);
   if (!post) {
     return <Loader/>;
   }
@@ -22,5 +25,20 @@ export default function Post(props) {
       />
       {body}
     </div>
+  );
+}
+
+export default function(props, context) {
+  let slug = props.slug || props.location.pathname;
+  if (slug[0] === '/') {
+    slug = slug.slice(1);
+  }
+  if (slug[slug.length - 1] === '/') {
+    slug = slug.slice(0, -1);
+  }
+  return (
+    <PostContainer slug={slug}>
+      <Post/>
+    </PostContainer>
   );
 }
