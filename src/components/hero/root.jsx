@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-// import Velocity from 'velocity-animate';
+import $ from 'jquery';
 
 import siteInfo from './../../info.json';
 import {Down} from './../elements/icons.jsx';
@@ -33,7 +33,7 @@ export default class Hero extends Component {
           className='hero__background hero__background--blurred'
           style={this.getBackgroundStyle()}
         />
-        <div className='hero__overlay' style={ this.getOverlayStyle() }/>
+        <div className='hero__overlay' style={this.getOverlayStyle()}/>
         <div className='hero__title-bar'>
           <div className='hero__title-bar__content'>
             <h1 className='title'>{title}</h1>
@@ -49,6 +49,9 @@ export default class Hero extends Component {
   }
 
   renderTestImage() {
+    if (!this.getImageUrl()) {
+      return null;
+    }
     return (
       <img
         style={{
@@ -70,16 +73,19 @@ export default class Hero extends Component {
 
   getImageUrl() {
     const {image} = this.props;
-    const imageUrl = `${siteInfo.siteUrl}${image}`;
-    return imageUrl;
+    if (!image) {
+      return null;
+    }
+    return `${siteInfo.siteUrl}${image}`;
   }
 
   getBackgroundStyle() {
-    if (!this.state.isImageLoaded) {
+    const imageUrl = this.getImageUrl();
+    if (!this.state.isImageLoaded || !imageUrl) {
       return {};
     }
     return {
-      'backgroundImage': `url(${this.getImageUrl()})`
+      'backgroundImage': `url(${imageUrl})`
     };
   }
 

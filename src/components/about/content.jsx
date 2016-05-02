@@ -16,16 +16,17 @@ export default class AboutContent extends Component {
   render() {
     const {post} = this.props;
     const {markdown, html} = post || {};
+    const body = (html || markdown) ? <div
+      className='static'
+      dangerouslySetInnerHTML={{__html: html || marked(markdown, {sanitize: true})}}
+    /> : null;
     return (
       <div>
         <Hero
           text={greetings[this.state.greetingIndex]}
           image={post ? post.image : null}
         />
-        <div
-          className='static'
-          dangerouslySetInnerHTML={{__html: html || marked(markdown, {sanitize: true})}}
-        />
+        {body}
       </div>
     );
   }

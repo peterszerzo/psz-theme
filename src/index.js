@@ -11,6 +11,9 @@ import reducer from './reducers/index.js';
 import './assets/styles/site.scss';
 
 function getInitialState() {
+  if (process.env.NODE_ENV === 'development') {
+    return {};
+  }
   let stateFromServer = window.__STATE_FROM_SERVER__;
   if (!stateFromServer) {return {};}
   try {
