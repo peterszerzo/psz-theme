@@ -1,8 +1,8 @@
 import React from 'react';
-import marked from 'marked';
 
-import Loader from './../loader/loader.jsx';
-import Hero from './../hero/root.jsx';
+import Static from '../static/static.jsx';
+import Loader from '../loader/loader.jsx';
+import Hero from '../hero/root.jsx';
 
 function NowContent(props) {
   const {post} = props;
@@ -16,10 +16,7 @@ function NowContent(props) {
         title={title}
         image={image}
       />
-      <div
-        className='static'
-        dangerouslySetInnerHTML={{__html: html || marked(markdown, {sanitize: true})}}
-      />
+      <Static markdown={markdown} html={html}/>
     </div>
   );
 }

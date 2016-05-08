@@ -27,7 +27,7 @@ function ModalNav(props) {
   return (
     <div className='modal-nav' style={style}>
       <div className='close-button' onClick={props.toggleExpandedState}>
-        <Falafel />
+        <Falafel/>
       </div>
       <ul className='modal-nav__items'>
         {list}

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import * as icons from '../icons/icons.jsx';
 import links from './links.json';
 import messages from './messages.json';
+import IconLink from '../icon_link/icon_link.jsx';
 
 import './footer.scss';
 
@@ -34,19 +34,7 @@ export default class Footer extends React.Component {
   }
 
   renderLinks() {
-    return links.map((link, i) => {
-      const {name, url} = link;
-      return (
-        <a
-          key={i}
-          className='link'
-          href={url}
-          style={{width: '20px', 'height': '20px'}}
-        >
-          {React.createElement(icons[name])}
-        </a>
-      );
-    });
+    return links.map((link, i) => <IconLink key={i} url={link.url} name={link.name}/>);
   }
 
   componentDidMount() {

@@ -1,4 +1,7 @@
-.link {
+@import '../../styles/variables/manifest';
+@import '../../styles/mixins/manifest';
+
+.icon-link {
   $size: 30px;
   $color: white;
   margin: auto;

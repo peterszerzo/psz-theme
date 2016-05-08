@@ -15,9 +15,23 @@
   width: 100%;
   transition: all 0.75s;
 
-  @mixin show-animate {
+  @mixin expand {
     @include bp-w(700px) {
       @content;
+    }
+  }
+
+  @mixin hide-animate {
+    @include expand {
+      @content;
+    }
+  }
+
+  @mixin show-animate {
+    @include expand {
+      .post-link:hover & {
+        @content;
+      }
     }
   }
 
@@ -56,43 +70,55 @@
     transition: all 0.75s;
   }
 
+  &__title-bar {
+    width: 100%;
+    position: absolute;
+    top: 65px;
+
+    @include expand {
+      top: 75px;
+    }
+  }
+
   &__title,
   &__subtitle {
-    position: absolute;
+    position: relative;
+    padding: 0 30px;
+    color: white;
     width: 100%;
     text-align: center;
   }
 
   &__title {
-    color: white;
     font-weight: bold;
-    position: absolute;
-    top: 75px;
-    @include font-size(38px);
+    @include font-size(24px);
+    margin-bottom: 15px;
 
-    @include show-animate {
-      top: 85px;
+    @include expand {
+      @include font-size(38px);
     }
 
-    .post-link:hover & {
-      top: 75px;
+    @include show-animate {
+      transform: translate3d(0, -10px, 0);
     }
   }
 
   &__subtitle {
     opacity: 0.8;
-    top: 127px;
-    @include font-size(22px);
-    color: white;
+    margin-top: 0;
+    @include font-size(18px);
 
-    @include show-animate {
-      top: 147px;
+    @include expand {
+      @include font-size(22px);
+    }
+
+    @include hide-animate {
       opacity: 0;
     }
 
-    .post-link:hover & {
+    @include show-animate {
       opacity: 0.8;
-      top: 127px;
+      transform: translate3d(0, -20px, 0);
     }
   }
 

@@ -1,6 +1,8 @@
 @import '../../styles/variables/manifest';
 @import '../../styles/mixins/manifest';
 
+@import './close_button';
+
 .modal-nav {
   position: fixed;
   top: 0;

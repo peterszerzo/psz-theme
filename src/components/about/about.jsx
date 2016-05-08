@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import marked from 'marked';
 
-import Hero from './../hero/root.jsx';
+import Static from '../static/static.jsx';
+import Hero from '../hero/root.jsx';
 import greetings from './greetings.json';
 import PostContainer from '../../containers/post_container.jsx';
 
@@ -16,17 +16,13 @@ class About extends Component {
   render() {
     const {post} = this.props;
     const {markdown, html} = post || {};
-    const body = (html || markdown) ? <div
-      className='static'
-      dangerouslySetInnerHTML={{__html: html || marked(markdown, {sanitize: true})}}
-    /> : null;
     return (
       <div>
         <Hero
           text={greetings[this.state.greetingIndex]}
           image={post ? post.image : null}
         />
-        {body}
+        <Static markdown={markdown} html={html}/>
       </div>
     );
   }

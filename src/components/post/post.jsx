@@ -1,6 +1,7 @@
 import React from 'react';
 import marked from 'marked';
 
+import Static from '../static/static.jsx';
 import Loader from '../loader/loader.jsx';
 import Hero from '../hero/root.jsx';
 
@@ -15,11 +16,6 @@ function Post(props) {
   }
   const {markdown, title, image, html} = post;
   const metaDescription = post.meta_description;
-  const body = (markdown || html) ?
-    <div
-      className='static'
-      dangerouslySetInnerHTML={{__html: html || marked(markdown)}}
-    /> : null;
   return (
     <div>
       <Hero
@@ -27,7 +23,7 @@ function Post(props) {
         subtitle={metaDescription}
         image={image}
       />
-      {body}
+      <Static markdown={markdown} html={html}/>
     </div>
   );
 }

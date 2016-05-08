@@ -1,3 +1,6 @@
+@import '../../styles/variables/manifest';
+@import '../../styles/mixins/manifest';
+
 .static {
   $padding: 25px;
   width: 100%;
@@ -49,8 +52,8 @@
     opacity: 0.7;
 
     &:hover {
-			opacity: 1;
-		}
+      opacity: 1;
+    }
   }
 
   img,

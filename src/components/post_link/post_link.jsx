@@ -15,8 +15,10 @@ export default function PostLink(props) {
       <div className='post-link__background' style={{backgroundImage: `url(${post.image})`}} />
       <div className={overlayClassName}/>
       <p className='post-link__date'>{publishDate}</p>
-      <h1 className='post-link__title'>{post.title}</h1>
-      <h2 className='post-link__subtitle'>{post.meta_description}</h2>
+      <div className='post-link__title-bar'>
+        <h1 className='post-link__title'>{post.title}</h1>
+        <h2 className='post-link__subtitle'>{post.meta_description}</h2>
+      </div>
     </Link>
   );
 }

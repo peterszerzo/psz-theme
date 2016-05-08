@@ -29,9 +29,10 @@ export default class WelcomeContent extends React.Component {
 
   render() {
     const {ui} = this.props;
+    const imageUrl = (process.env.NODE_ENV === 'production') ? '/assets/images/sky-1200.jpg' : '/images/sky-1200.jpg';
     return (
       <div className='welcome'>
-        <div className='welcome__background'/>
+        <div className='welcome__background' style={{backgroundImage: `url(${imageUrl})`}}/>
         <div className='welcome__globe'>
           <Animation
             width={ui.windowWidth}
