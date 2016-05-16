@@ -10,12 +10,16 @@
     <link rel="shortcut icon" href="{{asset "images/favicon.ico"}}">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
   	<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
-    <script src="{{asset "js/bundle.js"}}"></script>
     {{ghost_head}}
   </head>
   <body>
-    <div id="site"></div>
+    <div id="site">
+      <div class="wrapper">
+        <div style="width:100%;text-align:center;padding-top:100px;height:100vh;" class="loader"><img style="display:inline-block;width:60px;height:60px;" src="/images/loader/ripple.gif" alt="Loading icon"/></div>
+      </div>
+    </div>
     {{{body}}}
     {{ghost_foot}}
+    <script src="{{asset "js/bundle.js"}}"></script>
   </body>
 </html>

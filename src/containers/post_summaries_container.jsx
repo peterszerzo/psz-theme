@@ -18,14 +18,10 @@ class PostSummariesContainer extends Component {
 
   render() {
     const posts = this.getFilteredPosts();
-    return (
-      <div>
-        {React.cloneElement(this.props.children, {
-          posts: posts || [],
-          ui: this.props.ui
-        })}
-      </div>
-    );
+    return React.cloneElement(this.props.children, {
+      posts: posts || [],
+      ui: this.props.ui
+    });
   }
 
   componentDidMount() {

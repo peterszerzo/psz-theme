@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import Static from '../static/static.jsx';
-import Hero from '../hero/root.jsx';
+import Hero from '../hero/hero.jsx';
 import greetings from './greetings.json';
 import PostContainer from '../../containers/post_container.jsx';
 

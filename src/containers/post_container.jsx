@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
-import fetchSinglePost from './../utilities/fetch_single_post.js';
+import fetchSinglePost from '../utilities/fetch_single_post.js';
 
 class PostContainer extends Component {
 
@@ -18,13 +18,9 @@ class PostContainer extends Component {
 
   render() {
     const post = this.getPost();
-    return (
-      <div>
-        {React.cloneElement(this.props.children, {
-          post: post
-        })}
-      </div>
-    );
+    return React.cloneElement(this.props.children, {
+      post: post
+    });
   }
 
   componentDidMount() {

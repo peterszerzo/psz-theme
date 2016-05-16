@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 
 import Loader from '../loader/loader.jsx';
-import Hero from '../hero/root.jsx';
+import Hero from '../hero/hero.jsx';
 import PostSummariesContainer from '../../containers/post_summaries_container.jsx';
 import PostLink from '../post_link/post_link.jsx';
 
@@ -13,7 +13,7 @@ function Posts(props) {
     return <Loader/>;
   }
 
-  const list = props.posts.map((post, i) => <PostLink post={post} index={i}/>);
+  const list = props.posts.map((post, i) => <PostLink key={i} post={post} index={i}/>);
 
   return (
     <div className='posts'>
@@ -26,7 +26,7 @@ function Posts(props) {
 }
 
 Posts.propTypes = {
-  posts: PropTypes.array.isRequired
+  posts: PropTypes.array
 };
 
 export default function(props) {

@@ -1,13 +1,13 @@
 import React, {Component, PropTypes} from 'react';
-import {findDOMNode} from 'react-dom';
 import $ from 'jquery';
+import {connect} from 'react-redux';
 
 import siteInfo from '../../info.json';
 import {Down} from '../icons/icons.jsx';
 
 import './hero.scss';
 
-export default class Hero extends Component {
+class Hero extends Component {
 
   static contextTypes = {
     windowWidth: PropTypes.number,
@@ -25,9 +25,9 @@ export default class Hero extends Component {
   }
 
   render() {
-    const {title, subtitle, text} = this.props;
+    const {title, subtitle, text, ui} = this.props;
     return (
-      <div className='hero'>
+      <div className='hero' style={{height: ui.windowHeight}}>
         {this.renderTestImage()}
         <div
           className='hero__background hero__background--blurred'
@@ -103,13 +103,10 @@ export default class Hero extends Component {
   }
 
   scroll() {
-    const root = findDOMNode(this);
     const node = document.getElementsByClassName('wrapper')[0];
     const offset = this.context.windowHeight - 70;
-    // Velocity(root, 'scroll', {
-    //   duration: 1000,
-    //   offset: -100
-    // });
     $(node).animate({scrollTop: offset}, 1000);
   }
 }
+
+export default connect(state => ({ui: state.ui}))(Hero);

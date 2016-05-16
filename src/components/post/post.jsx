@@ -1,9 +1,8 @@
 import React from 'react';
-import marked from 'marked';
 
 import Static from '../static/static.jsx';
 import Loader from '../loader/loader.jsx';
-import Hero from '../hero/root.jsx';
+import Hero from '../hero/hero.jsx';
 
 import './post.scss';
 

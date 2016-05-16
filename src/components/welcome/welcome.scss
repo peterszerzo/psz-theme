@@ -12,17 +12,16 @@
   $c: get-color(purple);
 
   &__summary {
-    $pad-y: 28px;
-    $pad-x: 24px;
-    $width: 254px + 2 * $pad-x;
-    $height: 115px + 2 * $pad-y;
+    $pad: 35px;
+    $width: (263px + 2 * $pad) * 0.7;
+    $height: (131px + 2 * $pad) * 0.7;
+    padding: $pad * 0.7;
     animation: bounce 4.5s linear infinite;
     background-color: $c;
     border: 2px solid rgba(255, 255, 255, 0);
-    border-radius: 24px;
+    border-radius: 12px;
     display: block;
     z-index: 2;
-    padding: $pad-y $pad-x;
     width: $width;
     height: $height;
     margin: auto;
@@ -37,6 +36,12 @@
 
     svg {
       fill: white;
+    }
+
+    @include bp-w(500px) {
+      width: 263px + 2 * $pad;
+      height: 131px + 2 * $pad;
+      padding: $pad;
     }
   }
 
@@ -66,6 +71,7 @@
   }
 
   &__message {
+    display: none;
     z-index: 2;
     transition: all 0.75s;
     position: absolute;
@@ -78,5 +84,9 @@
     @include font-size(16px);
     opacity: 0.7;
     font-family: 'PT Sans';
+
+    @include bp-w(800px) {
+      display: block;
+    }
   }
 }

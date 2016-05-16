@@ -2,7 +2,7 @@ import React from 'react';
 
 import Static from '../static/static.jsx';
 import Loader from '../loader/loader.jsx';
-import Hero from '../hero/root.jsx';
+import Hero from '../hero/hero.jsx';
 
 function NowContent(props) {
   const {post} = props;
