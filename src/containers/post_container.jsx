@@ -1,19 +1,12 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import fetchSinglePost from '../utilities/fetch_single_post.js';
+import {requestPost} from '../actions/post.js';
 
 class PostContainer extends Component {
 
-  static propTypes = {
-    post: PropTypes.object
-  }
-
   constructor(props) {
     super(props);
-    this.state = {
-      isFetching: false
-    };
   }
 
   render() {
@@ -24,39 +17,21 @@ class PostContainer extends Component {
   }
 
   componentDidMount() {
-    const post = this.getPost();
-    if (!post && !this.state.isFetching) {
-      this.fetchPost();
-    }
+    const {slug, dispatch} = this.props;
+    dispatch(requestPost(slug));
   }
 
   getPost() {
     const {slug, postsBySlug} = this.props;
-    if (!postsBySlug || !postsBySlug[slug] || postsBySlug[slug].status !== 'success') {
-      return;
-    }
-    return postsBySlug[slug].data;
-  }
-
-  fetchPost() {
-    this.setState({
-      isFetching: true
-    });
-    const {slug} = this.props;
-    fetchSinglePost(slug)
-      .then((posts) => {
-        this.props.dispatch({
-          type: 'FETCH_SINGLE_POST_SUCCESS',
-          data: posts[0]
-        });
-      });
+    const post = postsBySlug[slug];
+    return post ? post.data : null;
   }
 }
 
 function mapStateToProps(state) {
   return {
     ui: state.ui,
-    postsBySlug: state.entities.posts.bySlug
+    postsBySlug: state.posts.bySlug
   };
 }
 

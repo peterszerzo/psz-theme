@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import $ from 'jquery';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {setLoadedImage} from '../../actions/ui';
+import {animatedScrollTo} from '../../effects/scroll';
 
 import siteInfo from '../../info.json';
 import {Down} from '../icons/icons.jsx';
@@ -9,17 +10,8 @@ import './hero.scss';
 
 class Hero extends Component {
 
-  static contextTypes = {
-    windowWidth: PropTypes.number,
-    windowHeight: PropTypes.number,
-    scrollTop: PropTypes.number
-  }
-
   constructor(props) {
     super(props);
-    this.state = {
-      isImageLoaded: false
-    };
     this.handleImageLoad = this.handleImageLoad.bind(this);
     this.scroll = this.scroll.bind(this);
   }
@@ -63,7 +55,7 @@ class Hero extends Component {
         src={this.getImageUrl()}
         onLoad={this.handleImageLoad}
       />
-  );
+    );
   }
 
   componentDidMount() {
@@ -81,7 +73,7 @@ class Hero extends Component {
 
   getBackgroundStyle() {
     const imageUrl = this.getImageUrl();
-    if (!this.state.isImageLoaded || !imageUrl) {
+    if (!this.isImageLoaded() || !imageUrl) {
       return {};
     }
     return {
@@ -90,23 +82,25 @@ class Hero extends Component {
   }
 
   getOverlayStyle() {
-    const opacity = this.state.isImageLoaded ? '0.6' : '1';
+    const opacity = this.isImageLoaded() ? '0.6' : '1';
     return {
       'opacity': opacity
     };
   }
 
+  isImageLoaded() {
+    return this.props.ui.loadedImages.indexOf(this.getImageUrl()) > -1;
+  }
+
   handleImageLoad() {
-    this.setState({
-      isImageLoaded: true
-    });
+    this.props.dispatch(setLoadedImage(this.getImageUrl()));
   }
 
   scroll() {
-    const node = document.getElementsByClassName('wrapper')[0];
-    const offset = this.context.windowHeight - 70;
-    $(node).animate({scrollTop: offset}, 1000);
+    animatedScrollTo(this.props.ui.windowHeight - 70);
   }
 }
 
-export default connect(state => ({ui: state.ui}))(Hero);
+export default connect(state => ({
+  ui: state.ui
+}))(Hero);

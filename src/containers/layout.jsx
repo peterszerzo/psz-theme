@@ -2,29 +2,23 @@ import React, {Component, PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
 
-import Header from './header/header.jsx';
-import Footer from './footer/footer.jsx';
+import Header from '../components/header/header.jsx';
+import Footer from '../components/footer/footer.jsx';
+import {setScrollTop, setWindowDimensions} from '../actions/ui.js';
 
 class Layout extends Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired,
-    windowWidth: PropTypes.number,
-    windowHeight: PropTypes.number,
-    scrollTop: PropTypes.number
+    router: PropTypes.object.isRequired
   }
 
   static childContextTypes = {
-    router: PropTypes.object.isRequired,
-    windowWidth: PropTypes.number,
-    windowHeight: PropTypes.number,
-    scrollTop: PropTypes.number
+    router: PropTypes.object.isRequired
   }
 
   getChildContext() {
     return {
-      router: this.context.router,
-      ...this.props.ui
+      router: this.context.router
     };
   }
 
@@ -43,7 +37,7 @@ class Layout extends Component {
         />
         { React.cloneElement(this.props.children, {
           location: this.props.location,
-          uiState: this.props.ui
+          ui: this.props.ui
         }) }
         <Footer />
       </div>
@@ -57,20 +51,20 @@ class Layout extends Component {
   }
 
   setWindowDimensions() {
-    this.props.dispatch({type: 'SET_WINDOW_DIMENSIONS', data: {
+    this.props.dispatch(setWindowDimensions({
       height: window.innerHeight,
       width: window.innerWidth
-    }});
+    }));
   }
 
   updateScrollTop(e) {
     const node = findDOMNode(this);
-    this.props.dispatch({type: 'SET_SCROLL_TOP', data: node.scrollTop});
+    this.props.dispatch(setScrollTop(node.scrollTop));
   }
 
 }
 
 export default connect(state => ({
   ui: state.ui,
-  entities: state.entities
+  post: state.post
 }))(Layout);

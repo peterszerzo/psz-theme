@@ -23,8 +23,10 @@ export default class WelcomeContent extends React.Component {
     this.triggerMessage = this.triggerMessage.bind(this);
     this.hideMessage = this.hideMessage.bind(this);
     this.allowMessageShow = this.allowMessageShow.bind(this);
-    this.hideMessageTimeout = null;
-    this.allowMessageShowTimeout = null;
+    this.timeouts = {
+      hideMessage: null,
+      allowMessageShow: null
+    };
   }
 
   render() {
@@ -58,6 +60,12 @@ export default class WelcomeContent extends React.Component {
     );
   }
 
+  componentWillUnmount() {
+    Object.keys(this.timeouts).forEach((key) => {
+      clearTimeout(this.timeouts[key]);
+    });
+  }
+
   navigateToRandomPost() {
     const {posts} = this.props;
     const {router} = this.context;
@@ -73,15 +81,20 @@ export default class WelcomeContent extends React.Component {
 
   triggerMessage() {
     if (!this.state.shouldMessageShowOnHover) {
-      return;}
+      return;
+    }
     this.setState({
       isMessageShowing: true,
       shouldMessageShowOnHover: true
     });
-    if (this.hideMessageTimeout) { clearTimeout(this.hideMessageTimeout); }
-    if (this.allowMessageShowTimeout) { clearTimeout(this.allowMessageShowTimeout); }
-    this.hideMessageTimeout = setTimeout(this.hideMessage, FADE_OUT_IN);
-    this.allowMessageShowTimeout = setTimeout(this.allowMessageShow, DO_NOT_REAPPEAR_ON_HOVER_FOR);
+    if (this.timeouts.hideMessage) {
+      clearTimeout(this.timeouts.hideMessage);
+    }
+    if (this.timeouts.allowMessageShow) {
+      clearTimeout(this.timeouts.allowMessageShow);
+    }
+    this.timeouts.hideMessage = setTimeout(this.hideMessage, FADE_OUT_IN);
+    this.timeouts.allowMessageShow = setTimeout(this.allowMessageShow, DO_NOT_REAPPEAR_ON_HOVER_FOR);
   }
 
   hideMessage() {

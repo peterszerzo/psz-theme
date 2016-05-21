@@ -2,8 +2,9 @@ import React from 'react';
 import domReady from 'domready';
 import {render} from 'react-dom';
 import {Router, browserHistory} from 'react-router';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
 
 import routes from './routes/routes.jsx';
 import reducer from './reducers/index.js';
@@ -35,7 +36,7 @@ domReady(() => {
   require('babel-polyfill');
   require('whatwg-fetch');
 
-  const store = createStore(reducer, getInitialState());
+  const store = createStore(reducer, getInitialState(), applyMiddleware(thunkMiddleware));
 
   const reduxRouter = (
     <Provider store={store}>

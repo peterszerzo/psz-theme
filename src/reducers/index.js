@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 
-import uiReducer from './ui';
-import entitiesReducer from './entities/index';
+import ui from './ui.js';
+import posts from './posts.js';
 
 export default combineReducers({
-  ui: uiReducer,
-  entities: entitiesReducer
+  ui,
+  posts
 });

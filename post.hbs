@@ -3,21 +3,19 @@
 {{#post}}
 <script>
   window.__STATE_FROM_SERVER__ = {
-    entities: {
-      posts: {
-        bySlug: {
-          '{{slug}}': {
-            data: {
-              slug: "{{slug}}",
-              title: "{{title}}",
-              meta_description: "{{meta_description}}",
-              meta_title: "{{meta_title}}",
-              published_at: "{{publushed_at}}",
-              image: "{{image}}",
-              featured: "{{featured}}"
-            },
-            status: 'success'
-          }
+    posts: {
+      bySlug: {
+        '{{slug}}': {
+          data: {
+            slug: "{{slug}}",
+            title: "{{title}}",
+            meta_description: "{{meta_description}}",
+            meta_title: "{{meta_title}}",
+            published_at: "{{publushed_at}}",
+            image: "{{image}}",
+            featured: "{{featured}}"
+          },
+          status: 'success'
         }
       }
     }

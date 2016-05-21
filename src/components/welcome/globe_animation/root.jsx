@@ -32,10 +32,10 @@ export default class Animation extends React.Component {
     const style = this.state.isMouseOverShape ? {cursor: 'pointer'} : {};
     return (
       <canvas
-        onClick={ this.handleClick }
-        style={ style }
-        width={ this.props.width }
-        height={ this.props.height }
+        onClick={this.handleClick}
+        style={style}
+        width={this.props.width}
+        height={this.props.height}
         ref='canvas'
       />
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
-import Layout from '../components/layout.jsx';
+import Layout from '../containers/layout.jsx';
 import Welcome from '../components/welcome/welcome.jsx';
 import About from '../components/about/about.jsx';
 import Now from '../components/now/root.jsx';
