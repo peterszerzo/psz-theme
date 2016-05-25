@@ -1,32 +1,55 @@
 import React from 'react';
 import domReady from 'domready';
 import {render} from 'react-dom';
-import {Router, browserHistory} from 'react-router';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
+import {getLocalPathname} from 'local-links';
 
-import routes from './routes/routes.jsx';
+import {setWindowDimensions} from './actions/ui.js';
+
+import {setUrl} from './actions/url.js';
 import reducer from './reducers/index.js';
+
+import Layout from './containers/layout.jsx';
 
 import './styles/site.scss';
 
-function getInitialState() {
-  if (process.env.NODE_ENV === 'development') {
-    return {};
-  }
-  let stateFromServer = window.__STATE_FROM_SERVER__;
-  if (!stateFromServer) {return {};}
+function getInitialUiState() {
+  return {
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
+    scrollTop: 0,
+    loadedImages: []
+  };
+}
+
+function getInitialUrlState() {
+  return location.pathname;
+}
+
+function getInitialPostsState() {
   try {
+    const postsState = window.__STATE_FROM_SERVER__.posts;
     let postHtmlTemplate = document.getElementById('post-html-template');
     let html = postHtmlTemplate.innerHTML;
     let slug = postHtmlTemplate.getAttribute('data-post-slug');
-    stateFromServer.entities.posts.bySlug[slug].data.html = html;
-    return stateFromServer;
+    postsState.bySlug[slug].data.html = html;
+    return postsState;
   } catch(err) {
-    stateFromServer = {};
+    return {
+      bySlug: {},
+      summaries: {}
+    };
   }
-  return stateFromServer;
+}
+
+function getInitialState() {
+  return {
+    url: getInitialUrlState(),
+    ui: getInitialUiState(),
+    posts: getInitialPostsState()
+  };
 }
 
 domReady(() => {
@@ -38,14 +61,31 @@ domReady(() => {
 
   const store = createStore(reducer, getInitialState(), applyMiddleware(thunkMiddleware));
 
-  const reduxRouter = (
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        {routes}
-      </Router>
-    </Provider>
-  );
+  window.addEventListener('popstate', () => {
+    store.dispatch(setUrl(location.pathname));
+  });
 
-  const node = global.document.getElementById('site');
-  render(reduxRouter, node);
+  window.addEventListener('resize', () => {
+    store.dispatch(setWindowDimensions({
+      height: window.innerHeight,
+      width: window.innerWidth
+    }));
+  });
+
+  document.body.addEventListener('click', (event) => {
+    const url = getLocalPathname(event);
+    if (url) {
+      event.preventDefault();
+      store.dispatch(setUrl(url));
+    }
+    if (location.pathname !== store.getState().url) {
+      history.pushState(null, null, url);
+    }
+  });
+
+  render((
+    <Provider store={store}>
+      <Layout/>
+    </Provider>
+  ), document.getElementById('site'));
 });

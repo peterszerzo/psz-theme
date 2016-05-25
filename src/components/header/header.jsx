@@ -1,6 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
-import {Link} from 'react-router';
 
 import {MainLogo, Falafel} from '../icons/icons.jsx';
 import ModalNav from '../modal_nav/modal_nav.jsx';
@@ -9,10 +8,6 @@ import buttons from './buttons.json';
 import './header.scss';
 
 export default class Header extends Component {
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
 
   constructor(props) {
     super(props);
@@ -37,9 +32,9 @@ export default class Header extends Component {
 
     return (
       <header className={cls}>
-        <Link className='header__icon header__main-link' to='/'>
+        <a className='header__icon header__main-link' href='/'>
           <MainLogo />
-        </Link>
+        </a>
         <nav className='header__icon header__falafel' onClick={this.toggleExpandedState}>
           <Falafel/>
         </nav>
@@ -57,9 +52,9 @@ export default class Header extends Component {
       const {url, name} = button;
       return (
         <li key={i} >
-          <Link className='header__nav__item' to={url}>
+          <a className='header__nav__item' href={url}>
             { name }
-          </Link>
+          </a>
         </li>
       );
     });

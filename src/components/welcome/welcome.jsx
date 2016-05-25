@@ -5,7 +5,7 @@ import WelcomeContent from './content.jsx';
 
 import './welcome.scss';
 
-export default function Welcome(props, context) {
+export default function Welcome(props) {
   return (
     <PostSummariesContainer>
       <WelcomeContent/>

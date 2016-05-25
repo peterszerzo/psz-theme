@@ -1,30 +1,18 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
 
+import * as components from '../components/index.js';
+
+import getRoute from '../routes/router.js';
 import Header from '../components/header/header.jsx';
 import Footer from '../components/footer/footer.jsx';
-import {setScrollTop, setWindowDimensions} from '../actions/ui.js';
+import {setScrollTop} from '../actions/ui.js';
 
 class Layout extends Component {
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
-  static childContextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
-  getChildContext() {
-    return {
-      router: this.context.router
-    };
-  }
-
   constructor(props) {
     super(props);
-    this.setWindowDimensions = this.setWindowDimensions.bind(this);
     this.updateScrollTop = this.updateScrollTop.bind(this);
   }
 
@@ -33,28 +21,25 @@ class Layout extends Component {
       <div className='wrapper' onScroll={this.updateScrollTop}>
         <Header
           ui={this.props.ui}
-          pathname={this.props.location.pathname}
+          url={this.props.url}
         />
-        { React.cloneElement(this.props.children, {
-          location: this.props.location,
-          ui: this.props.ui
-        }) }
+          {this.renderRouteComponent()}
         <Footer />
       </div>
     );
   }
 
-  componentWillMount() {
-    this.setWindowDimensions();
-    // Component alive while app runs, no need to remove this event listener.
-    window.addEventListener('resize', this.setWindowDimensions);
-  }
-
-  setWindowDimensions() {
-    this.props.dispatch(setWindowDimensions({
-      height: window.innerHeight,
-      width: window.innerWidth
-    }));
+  renderRouteComponent() {
+    const {url} = this.props;
+    const {componentName, props, routeParams} = getRoute(url);
+    const Comp = components[componentName];
+    return (
+      <Comp
+        {...props}
+        {...routeParams}
+        ui={this.props.ui}
+      />
+    );
   }
 
   updateScrollTop(e) {
@@ -66,5 +51,6 @@ class Layout extends Component {
 
 export default connect(state => ({
   ui: state.ui,
+  url: state.url,
   post: state.post
 }))(Layout);

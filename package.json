@@ -53,6 +53,7 @@
     "classnames": "^2.2.4",
     "domready": "^1.0.8",
     "history": "^2.1.0",
+    "local-links": "^1.4.0",
     "marked": "^0.3.5",
     "moment": "^2.13.0",
     "normalize.css": "^3.0.3",
@@ -62,6 +63,7 @@
     "react-router": "2.4.0",
     "redux": "^3.3.1",
     "redux-thunk": "^2.1.0",
+    "route-parser": "0.0.5",
     "whatwg-fetch": "^0.11.0"
   }
 }

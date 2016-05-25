@@ -27,7 +27,7 @@ function Post(props) {
   );
 }
 
-export default function(props, context) {
+export default function(props) {
   let slug = props.slug || props.location.pathname;
   if (slug[0] === '/') {
     slug = slug.slice(1);

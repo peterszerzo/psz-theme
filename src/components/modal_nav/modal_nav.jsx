@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
 
 import './modal_nav.scss';
 import {Falafel} from '../icons/icons.jsx';
@@ -12,14 +11,14 @@ function ModalNav(props) {
     const {url, name} = button;
     return (
       <li key={i} >
-        <Link
+        <a
           activeClassName='modal-nav__item--active'
           className='modal-nav__item'
-          to={url}
+          href={url}
           onClick={props.toggleExpandedState}
         >
           {name}
-        </Link>
+        </a>
       </li>
     );
   });

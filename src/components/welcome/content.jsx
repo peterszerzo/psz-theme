@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 
 import Banner from './banner.jsx';
 import Animation from './globe_animation/root.jsx';
@@ -8,10 +7,6 @@ const FADE_OUT_IN = 4500;
 const DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000;
 
 export default class WelcomeContent extends React.Component {
-
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  }
 
   constructor(props) {
     super(props);
@@ -43,9 +38,9 @@ export default class WelcomeContent extends React.Component {
             triggerMessage={this.triggerMessage}
           />
         </div>
-        <Link className='welcome__summary' to='/projects'>
+        <a className='welcome__summary' href='/projects'>
           <Banner/>
-        </Link>
+        </a>
         {this.renderMessage()}
       </div>
     );
@@ -68,14 +63,14 @@ export default class WelcomeContent extends React.Component {
 
   navigateToRandomPost() {
     const {posts} = this.props;
-    const {router} = this.context;
     let randomPostSlug;
     if (posts) {
       randomPostSlug = posts[Math.floor(posts.length * Math.random())].slug;
     }
     if (randomPostSlug) {
       let url = `/${randomPostSlug}`;
-      router.push(url);
+      // TODO: implement
+      // dispatch(setUrl(url));
     }
   }
 
