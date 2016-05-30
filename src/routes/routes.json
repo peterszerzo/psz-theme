@@ -9,7 +9,7 @@
     "componentName": "Posts",
     "props": {
       "activeTagName": "project",
-      "slug": "blog",
+      "slug": "projects",
       "title": "Projects"
     }
   },

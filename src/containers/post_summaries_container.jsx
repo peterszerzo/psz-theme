@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {requestPostSummaries} from '../actions/post.js';
+import {
+  requestPostSummaries,
+  requestPost
+} from '../actions/post.js';
 
 class PostSummariesContainer extends Component {
 
@@ -11,22 +14,34 @@ class PostSummariesContainer extends Component {
 
   render() {
     const posts = this.getFilteredPosts();
+    const post = this.getPost();
     return React.cloneElement(this.props.children, {
       posts: posts,
+      post: post,
       ui: this.props.ui
     });
   }
 
   componentDidMount() {
     this.props.dispatch(requestPostSummaries());
+    if (this.props.slug) {
+      this.props.dispatch(requestPost(this.props.slug));
+    }
+  }
+
+  getPost() {
+    const post = this.props.posts.bySlug[this.props.slug];
+    if (post) {
+      return post.data;
+    }
   }
 
   getPosts() {
-    const {postSummaries} = this.props;
-    if (!postSummaries) {
+    const {summaries} = this.props.posts;
+    if (!summaries) {
       return [];
     }
-    return postSummaries.data || [];
+    return summaries.data || [];
   }
 
   getFilteredPosts() {
@@ -46,7 +61,7 @@ class PostSummariesContainer extends Component {
 function mapStateToProps(state) {
   return {
     ui: state.ui,
-    postSummaries: state.posts.summaries
+    posts: state.posts
   };
 }
 

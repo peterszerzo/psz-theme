@@ -7,17 +7,20 @@ import PostLink from '../post_link/post_link.jsx';
 
 import './posts.scss';
 
-function Posts(props) {
+function Posts({post, posts}) {
 
-  if (!props) {
+  if (!post || !posts) {
     return <Loader/>;
   }
 
-  const list = props.posts.map((post, i) => <PostLink key={i} post={post} index={i}/>);
+  const list = posts.map((post, i) => <PostLink key={i} post={post} index={i}/>);
 
   return (
     <div className='posts'>
-      <Hero title={props.title}/>
+      <Hero
+        title={post.title}
+        image={post.image}
+      />
       <div className='posts__list'>
         {list}
       </div>

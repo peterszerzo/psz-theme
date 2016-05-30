@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import Banner from './banner.jsx';
 import Animation from './globe_animation/root.jsx';
@@ -6,7 +6,7 @@ import Animation from './globe_animation/root.jsx';
 const FADE_OUT_IN = 4500;
 const DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000;
 
-export default class WelcomeContent extends React.Component {
+export default class WelcomeContent extends Component {
 
   constructor(props) {
     super(props);
@@ -99,5 +99,4 @@ export default class WelcomeContent extends React.Component {
   allowMessageShow() {
     this.setState({shouldMessageShowOnHover: true});
   }
-
 }
