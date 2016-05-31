@@ -23,11 +23,13 @@ export default class Footer extends React.Component {
         <div className='footer__messages'>
           <p>{messages[this.state.activeMessageIndex]}</p>
         </div>
-        <div className='footer__title'>
-          <p>peterszerzo.com</p>
-        </div>
-        <div className='footer__links'>
-          {this.renderLinks()}
+        <div className='footer__content'>
+          <div className='footer__title'>
+            <p>peterszerzo.com</p>
+          </div>
+          <div className='footer__links'>
+            {this.renderLinks()}
+          </div>
         </div>
       </footer>
     );

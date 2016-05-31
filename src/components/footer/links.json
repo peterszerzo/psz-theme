@@ -1,14 +1,18 @@
 [
 	{
+		"name": "Couchsurfing",
+		"url": "https://www.couchsurfing.com/people/mighty-comfortable"
+	},
+	{
+		"name": "Twitter",
+		"url": "https://twitter.com/peterszerzo"
+	},
+	{
 		"name": "GitHub",
 		"url": "https://github.com/pickled-plugins"
 	},
 	{
 		"name": "LinkedIn",
 		"url": "https://www.linkedin.com/in/peterszerzo"
-	},
-	{
-		"name": "Couchsurfing",
-		"url": "https://www.couchsurfing.com/people/mighty-comfortable"
 	}
 ]

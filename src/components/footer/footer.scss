@@ -4,12 +4,12 @@
 .footer {
   background-color: get-color(base);
   @include standard-shadow;
-  padding: 30px 0 40px;
+  padding: 40px 0;
   position: relative;
   overflow: hidden;
 
   @include bp-w(600px) {
-    padding: 60px 0 70px;
+    padding: 80px 0;
   }
 
   &__background {
@@ -26,6 +26,7 @@
   &__links {
     display: block;
     text-align: center;
+    height: 30px;
 
     .icon-link {
       display: inline-block;
@@ -40,24 +41,32 @@
       font-family: 'PT Sans';
       @include font-size(16px);
       color: white;
+      margin: 0 auto;
       text-align: center;
     }
   }
 
+  &__content {
+    position: relative;
+    vertical-align: middle;
+  }
+
   &__messages {
+    padding: 0 40px;
     position: absolute;
     display: flex;
-    top: 0;
     height: 100%;
     width: 100%;
-    opacity: 0.08;
+    top: -5px;
+    left: 0;
+    opacity: 0.04;
 
     p {
       text-align: center;
       margin: auto;
       font-family: 'PT Sans';
-      font-size: 12vw;
-      line-height: 1.1;
+      font-size: 12.5vw;
+      line-height: 0.8;
       display: block;
       color: white;
       opacity: 1;
@@ -69,7 +78,7 @@
 
     @include bp-w(600px) {
       p {
-        font-size: 8vw;
+        font-size: 10vw;
       }
     }
   }
