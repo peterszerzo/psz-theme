@@ -39,7 +39,9 @@ function getInitialPostsState() {
   } catch(err) {
     return {
       bySlug: {},
-      summaries: {}
+      summaries: {
+        status: 'empty'
+      }
     };
   }
 }

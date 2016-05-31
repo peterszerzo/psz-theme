@@ -2,14 +2,16 @@
   {
     "route": "/",
     "componentName": "Welcome",
-    "props": {}
+    "props": {
+      "slug": "welcome"
+    }
   },
   {
     "route": "/projects(/)",
     "componentName": "Posts",
     "props": {
       "activeTagName": "project",
-      "slug": "blog",
+      "slug": "projects",
       "title": "Projects"
     }
   },

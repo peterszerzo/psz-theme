@@ -6,8 +6,6 @@ export default function fetchGhost(ghostApiUrl, ghostApiOptions) {
     url = `${siteInfo.siteUrl}${url}`;
   }
   return fetch(url, {mode: 'cors'})
-    .then(res => {
-      return res.json();
-    })
+    .then(res => res.json())
     .then(res => res.posts ? res.posts : res);
 }
