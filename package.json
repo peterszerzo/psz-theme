@@ -4,11 +4,12 @@
   "description": "Single-page Ghost theme",
   "main": "index.js",
   "scripts": {
+    "create-build-folders": "mkdir -p assets/js && mkdir -p build",
     "spec": "mocha src/**/*_spec.js --compilers js:babel-core/register",
     "dev": "NODE_ENV=development webpack --config webpack.config.babel.js --watch",
     "build-assets": "NODE_ENV=production webpack --config webpack.config.babel.js",
     "copy-theme-files": "cp -R assets build/psz-theme && cp *.hbs build/psz-theme && cp package.json build/psz-theme",
-    "build": "npm run build-assets && npm run copy-theme-files",
+    "build": "npm run create-build-folders && npm run build-assets && npm run copy-theme-files",
     "testserver": "NODE_ENV=development node test_server/index.js"
   },
   "repository": {
