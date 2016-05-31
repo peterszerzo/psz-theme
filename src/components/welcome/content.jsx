@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 
+import {setUrl} from '../../actions/url.js';
 import Banner from './banner.jsx';
+import Loader from '../loader/loader.jsx';
 import Animation from './globe_animation/root.jsx';
+import siteInfo from '../../info.json';
 
 const FADE_OUT_IN = 4500;
 const DO_NOT_REAPPEAR_ON_HOVER_FOR = 9000;
@@ -25,8 +28,11 @@ export default class WelcomeContent extends Component {
   }
 
   render() {
-    const {ui} = this.props;
-    const imageUrl = (process.env.NODE_ENV === 'production') ? '/assets/images/sky-1200.jpg' : '/images/sky-1200.jpg';
+    const {ui, post} = this.props;
+    if (!post || !post.image) {
+      return <Loader/>;
+    }
+    const imageUrl = this.getImageUrl();
     return (
       <div className='welcome'>
         <div className='welcome__background' style={{backgroundImage: `url(${imageUrl})`}}/>
@@ -48,9 +54,13 @@ export default class WelcomeContent extends Component {
 
   renderMessage() {
     const style = this.state.isMessageShowing ? {opacity: 1} : {opacity: 0};
+    const {post} = this.props;
     return (
-      <div className='welcome__message' style={style}>
-        {'hey, welcome! click a triangle for random content :)'}
+      <div
+        className='welcome__message'
+        style={style}
+      >
+        {post.markdown}
       </div>
     );
   }
@@ -61,6 +71,14 @@ export default class WelcomeContent extends Component {
     });
   }
 
+  getImageUrl() {
+    const {image} = this.props.post;
+    if (!image) {
+      return null;
+    }
+    return `${siteInfo.siteUrl}${image}`;
+  }
+
   navigateToRandomPost() {
     const {posts} = this.props;
     let randomPostSlug;
@@ -69,8 +87,7 @@ export default class WelcomeContent extends Component {
     }
     if (randomPostSlug) {
       let url = `/${randomPostSlug}`;
-      // TODO: implement
-      // dispatch(setUrl(url));
+      this.props.dispatch(setUrl(url));
     }
   }
 

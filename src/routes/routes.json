@@ -2,7 +2,9 @@
   {
     "route": "/",
     "componentName": "Welcome",
-    "props": {}
+    "props": {
+      "slug": "welcome"
+    }
   },
   {
     "route": "/projects(/)",

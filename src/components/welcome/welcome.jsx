@@ -7,7 +7,7 @@ import './welcome.scss';
 
 export default function Welcome(props) {
   return (
-    <PostSummariesContainer>
+    <PostSummariesContainer {...props}>
       <WelcomeContent/>
     </PostSummariesContainer>
   );

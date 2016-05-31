@@ -18,6 +18,7 @@ class PostSummariesContainer extends Component {
     return React.cloneElement(this.props.children, {
       posts: posts,
       post: post,
+      dispatch: this.props.dispatch,
       ui: this.props.ui
     });
   }
@@ -26,6 +27,12 @@ class PostSummariesContainer extends Component {
     this.props.dispatch(requestPostSummaries());
     if (this.props.slug) {
       this.props.dispatch(requestPost(this.props.slug));
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.slug && (this.props.slug !== nextProps.slug)) {
+      this.props.dispatch(requestPost(nextProps.slug));
     }
   }
 

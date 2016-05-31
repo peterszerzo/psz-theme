@@ -11,6 +11,7 @@ const summaryFields = [
 ];
 
 export default function fetchPostSummaries() {
+  // Cannot both filter and include fields (currently in Ghost Beta)
   return fetchGhost('posts', {
     'include': 'tags'//,
     //'fields': summaryFields.join(',')

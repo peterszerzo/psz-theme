@@ -22333,7 +22333,7 @@
 	  }
 	});
 	
-	var _post = __webpack_require__(219);
+	var _post = __webpack_require__(220);
 	
 	Object.defineProperty(exports, 'Post', {
 	  enumerable: true,
@@ -22394,14 +22394,14 @@
 	
 	var _content2 = _interopRequireDefault(_content);
 	
-	__webpack_require__(215);
+	__webpack_require__(216);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Welcome(props) {
 	  return _react2.default.createElement(
 	    _post_summaries_container2.default,
-	    null,
+	    props,
 	    _react2.default.createElement(_content2.default, null)
 	  );
 	}
@@ -22451,6 +22451,7 @@
 	      return _react2.default.cloneElement(this.props.children, {
 	        posts: posts,
 	        post: post,
+	        dispatch: this.props.dispatch,
 	        ui: this.props.ui
 	      });
 	    }
@@ -22460,6 +22461,13 @@
 	      this.props.dispatch((0, _post.requestPostSummaries)());
 	      if (this.props.slug) {
 	        this.props.dispatch((0, _post.requestPost)(this.props.slug));
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(nextProps) {
+	      if (nextProps.slug && this.props.slug !== nextProps.slug) {
+	        this.props.dispatch((0, _post.requestPost)(nextProps.slug));
 	      }
 	    }
 	  }, {
@@ -22619,6 +22627,7 @@
 	var summaryFields = ['tags', 'meta_title', 'meta_description', 'slug', 'title', 'published_at', 'image'];
 	
 	function fetchPostSummaries() {
+	  // Cannot both filter and include fields (currently in Ghost Beta)
 	  return (0, _fetch_ghost2.default)('posts', {
 	    'include': 'tags' //,
 	    //'fields': summaryFields.join(',')
@@ -22697,7 +22706,7 @@
 /* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22709,13 +22718,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _url = __webpack_require__(194);
+	
 	var _banner = __webpack_require__(210);
 	
 	var _banner2 = _interopRequireDefault(_banner);
 	
-	var _root = __webpack_require__(211);
+	var _loader = __webpack_require__(211);
+	
+	var _loader2 = _interopRequireDefault(_loader);
+	
+	var _root = __webpack_require__(212);
 	
 	var _root2 = _interopRequireDefault(_root);
+	
+	var _info = __webpack_require__(207);
+	
+	var _info2 = _interopRequireDefault(_info);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22754,9 +22773,14 @@
 	  _createClass(WelcomeContent, [{
 	    key: 'render',
 	    value: function render() {
-	      var ui = this.props.ui;
+	      var _props = this.props;
+	      var ui = _props.ui;
+	      var post = _props.post;
 	
-	      var imageUrl = process.env.NODE_ENV === 'production' ? '/assets/images/sky-1200.jpg' : '/images/sky-1200.jpg';
+	      if (!post || !post.image) {
+	        return _react2.default.createElement(_loader2.default, null);
+	      }
+	      var imageUrl = this.getImageUrl();
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'welcome' },
@@ -22783,10 +22807,15 @@
 	    key: 'renderMessage',
 	    value: function renderMessage() {
 	      var style = this.state.isMessageShowing ? { opacity: 1 } : { opacity: 0 };
+	      var post = this.props.post;
+	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'welcome__message', style: style },
-	        'hey, welcome! click a triangle for random content :)'
+	        {
+	          className: 'welcome__message',
+	          style: style
+	        },
+	        post.markdown
 	      );
 	    }
 	  }, {
@@ -22799,6 +22828,16 @@
 	      });
 	    }
 	  }, {
+	    key: 'getImageUrl',
+	    value: function getImageUrl() {
+	      var image = this.props.post.image;
+	
+	      if (!image) {
+	        return null;
+	      }
+	      return '' + _info2.default.siteUrl + image;
+	    }
+	  }, {
 	    key: 'navigateToRandomPost',
 	    value: function navigateToRandomPost() {
 	      var posts = this.props.posts;
@@ -22809,8 +22848,7 @@
 	      }
 	      if (randomPostSlug) {
 	        var url = '/' + randomPostSlug;
-	        // TODO: implement
-	        // dispatch(setUrl(url));
+	        this.props.dispatch((0, _url.setUrl)(url));
 	      }
 	    }
 	  }, {
@@ -22848,7 +22886,6 @@
 	}(_react.Component);
 	
 	exports.default = WelcomeContent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 /* 210 */
@@ -22888,6 +22925,44 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.default = Loader;
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var containerStyle = {
+	  width: '100%',
+	  textAlign: 'center',
+	  paddingTop: '100px',
+	  height: '100vh'
+	};
+	
+	var imageStyle = {
+	  display: 'inline-block',
+	  width: '60px',
+	  height: '60px'
+	};
+	
+	function Loader(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { style: containerStyle, className: 'loader' },
+	    _react2.default.createElement('img', { style: imageStyle, src: '/images/loader/ripple.gif', alt: 'Loading icon' })
+	  );
+	}
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -22897,15 +22972,15 @@
 	
 	var _reactDom = __webpack_require__(34);
 	
-	var _harmonic_oscillator = __webpack_require__(212);
+	var _harmonic_oscillator = __webpack_require__(213);
 	
 	var _harmonic_oscillator2 = _interopRequireDefault(_harmonic_oscillator);
 	
-	var _geometry_utilities = __webpack_require__(213);
+	var _geometry_utilities = __webpack_require__(214);
 	
 	var geoUtil = _interopRequireWildcard(_geometry_utilities);
 	
-	var _coordinates = __webpack_require__(214);
+	var _coordinates = __webpack_require__(215);
 	
 	var _coordinates2 = _interopRequireDefault(_coordinates);
 	
@@ -23083,7 +23158,7 @@
 	exports.default = Animation;
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23153,7 +23228,7 @@
 	exports.default = HarmonicOscillator;
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23220,7 +23295,7 @@
 	}
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23228,16 +23303,16 @@
 	module.exports = [[[-0.77, 10.81], [1.64, 6.64], [-3.17, 6.64], [-0.77, 10.81]], [[-4.15, 5.95], [-6.55, 10.12], [-1.74, 10.12], [-4.15, 5.95]], [[-3.7, 14.99], [-1.29, 10.82], [-6.1, 10.82], [-3.7, 14.99]], [[4.29, 10.76], [1.89, 14.93], [6.7, 14.93], [4.29, 10.76]], [[-40.54, 7.08], [-42.94, 11.24], [-38.13, 11.24], [-40.54, 7.08]], [[-34.38, 15.82], [-31.97, 11.65], [-36.79, 11.65], [-34.38, 15.82]], [[-19.43, 17.84], [-17.03, 13.67], [-21.84, 13.67], [-19.43, 17.84]], [[-23.88, 2.77], [-26.29, 6.94], [-21.47, 6.94], [-23.88, 2.77]], [[-24.62, 13.04], [-22.21, 8.87], [-27.02, 8.87], [-24.62, 13.04]], [[-13.01, 13.98], [-15.42, 18.15], [-10.6, 18.15], [-13.01, 13.98]], [[-10.12, 5.7], [-12.52, 9.87], [-7.71, 9.87], [-10.12, 5.7]], [[-16.82, 9.22], [-14.41, 5.06], [-19.23, 5.06], [-16.82, 9.22]], [[-38.94, 4.88], [-36.53, 0.71], [-41.34, 0.71], [-38.94, 4.88]], [[-24.76, -3.6], [-22.35, -7.77], [-27.17, -7.77], [-24.76, -3.6]], [[-28.02, 6.42], [-25.62, 2.25], [-30.43, 2.25], [-28.02, 6.42]], [[-28.01, -2.8], [-30.41, 1.37], [-25.6, 1.37], [-28.01, -2.8]], [[-31.55, 0.71], [-29.14, -3.46], [-33.96, -3.46], [-31.55, 0.71]], [[-36.23, 2.06], [-38.64, 6.22], [-33.83, 6.22], [-36.23, 2.06]], [[-31.42, 2.06], [-33.83, 6.22], [-29.01, 6.22], [-31.42, 2.06]], [[-33.83, 6.22], [-36.23, 10.39], [-31.42, 10.39], [-33.83, 6.22]], [[-31.42, 10.39], [-29.01, 6.22], [-33.83, 6.22], [-31.42, 10.39]], [[-36.23, 10.39], [-33.83, 6.22], [-38.64, 6.22], [-36.23, 10.39]], [[-33.83, 6.22], [-31.42, 2.06], [-36.23, 2.06], [-33.83, 6.22]], [[-13.92, 25.33], [-11.51, 21.16], [-16.33, 21.16], [-13.92, 25.33]], [[-3.49, 5.25], [-1.08, 1.08], [-5.89, 1.08], [-3.49, 5.25]], [[-6.68, 11.67], [-9.09, 15.84], [-4.27, 15.84], [-6.68, 11.67]], [[-2.07, 20.93], [0.34, 16.76], [-4.47, 16.76], [-2.07, 20.93]], [[4.11, 20.6], [6.52, 16.44], [1.7, 16.44], [4.11, 20.6]], [[29.18, 25.02], [26.78, 29.19], [31.59, 29.19], [29.18, 25.02]], [[23.8, 17.15], [26.2, 12.98], [21.39, 12.98], [23.8, 17.15]], [[20.85, 24.9], [23.25, 20.73], [18.44, 20.73], [20.85, 24.9]], [[29.47, 8.82], [31.88, 4.66], [27.07, 4.66], [29.47, 8.82]], [[30.36, -0.38], [32.77, -4.55], [27.95, -4.55], [30.36, -0.38]], [[37.5, -13.06], [35.09, -8.89], [39.9, -8.89], [37.5, -13.06]], [[39.5, -5.26], [37.1, -1.1], [41.91, -1.1], [39.5, -5.26]], [[42.23, 5.44], [44.64, 1.27], [39.82, 1.27], [42.23, 5.44]], [[45.95, 1.42], [48.36, -2.75], [43.55, -2.75], [45.95, 1.42]], [[17.67, 3.03], [20.08, -1.14], [15.26, -1.14], [17.67, 3.03]], [[16.68, -7.87], [14.27, -3.7], [19.08, -3.7], [16.68, -7.87]], [[24.33, -15.6], [21.92, -11.43], [26.74, -11.43], [24.33, -15.6]], [[22.86, -4.4], [25.27, -8.57], [20.45, -8.57], [22.86, -4.4]], [[29.91, -10.81], [32.31, -14.98], [27.5, -14.98], [29.91, -10.81]], [[24.03, -29.36], [21.63, -25.19], [26.44, -25.19], [24.03, -29.36]], [[19.91, -25.82], [22.32, -29.98], [17.5, -29.98], [19.91, -25.82]], [[16.63, -19.36], [19.04, -23.53], [14.23, -23.53], [16.63, -19.36]], [[25.14, -19.11], [27.55, -23.28], [22.74, -23.28], [25.14, -19.11]], [[28.94, -22.01], [26.53, -17.84], [31.34, -17.84], [28.94, -22.01]], [[13.72, -23.45], [11.32, -19.28], [16.13, -19.28], [13.72, -23.45]], [[12, -9.2], [14.4, -13.37], [9.59, -13.37], [12, -9.2]], [[-0.75, 11.17], [-3.16, 15.33], [1.66, 15.33], [-0.75, 11.17]], [[9.89, 10.52], [12.3, 6.35], [7.48, 6.35], [9.89, 10.52]], [[7.22, -7.28], [4.82, -3.11], [9.63, -3.11], [7.22, -7.28]], [[-20.73, 22.7], [-23.14, 26.87], [-18.32, 26.87], [-20.73, 22.7]], [[7.05, 19.34], [4.64, 23.51], [9.45, 23.51], [7.05, 19.34]], [[9.05, 20.74], [11.45, 16.57], [6.64, 16.57], [9.05, 20.74]], [[1.89, 14.93], [4.29, 10.76], [-0.52, 10.76], [1.89, 14.93]], [[1.89, 6.59], [-0.52, 10.76], [4.29, 10.76], [1.89, 6.59]], [[6.7, 6.59], [4.29, 10.76], [9.11, 10.76], [6.7, 6.59]], [[4.29, 10.76], [6.7, 6.59], [1.89, 6.59], [4.29, 10.76]], [[6.7, 14.93], [9.11, 10.76], [4.29, 10.76], [6.7, 14.93]], [[0.87, 21.14], [-1.53, 25.3], [3.28, 25.3], [0.87, 21.14]], [[9.51, 11.48], [7.1, 15.65], [11.92, 15.65], [9.51, 11.48]], [[12.76, 14.92], [15.17, 10.75], [10.35, 10.75], [12.76, 14.92]], [[16.44, 12.13], [14.03, 16.3], [18.85, 16.3], [16.44, 12.13]], [[13.68, 17.6], [11.27, 21.77], [16.08, 21.77], [13.68, 17.6]], [[-40.87, -24.33], [-43.28, -20.17], [-38.47, -20.17], [-40.87, -24.33]], [[-20.14, 1.95], [-17.73, -2.22], [-22.54, -2.22], [-20.14, 1.95]], [[15.26, 5.19], [12.85, 9.36], [17.66, 9.36], [15.26, 5.19]], [[21.17, 11.16], [23.58, 6.99], [18.76, 6.99], [21.17, 11.16]], [[-6.87, 18.24], [-9.28, 22.41], [-4.47, 22.41], [-6.87, 18.24]], [[-0.59, 2.2], [-2.99, 6.37], [1.82, 6.37], [-0.59, 2.2]], [[4.56, 2.14], [2.15, 6.31], [6.97, 6.31], [4.56, 2.14]], [[38.25, 2.8], [35.84, 6.97], [40.66, 6.97], [38.25, 2.8]], [[42.52, 8.35], [40.11, 12.52], [44.92, 12.52], [42.52, 8.35]], [[45.61, 11.29], [48.02, 7.12], [43.2, 7.12], [45.61, 11.29]], [[47.54, 18.48], [49.94, 14.31], [45.13, 14.31], [47.54, 18.48]], [[48.61, 7.09], [51.02, 2.92], [46.2, 2.92], [48.61, 7.09]], [[48.61, -1.25], [46.2, 2.92], [51.02, 2.92], [48.61, -1.25]], [[51.02, 2.92], [53.42, -1.25], [48.61, -1.25], [51.02, 2.92]], [[51.02, 11.26], [53.42, 7.09], [48.61, 7.09], [51.02, 11.26]], [[51.02, 2.92], [48.61, 7.09], [53.42, 7.09], [51.02, 2.92]], [[45.37, 2.25], [42.96, 6.42], [47.78, 6.42], [45.37, 2.25]], [[48.48, 7.28], [46.07, 11.45], [50.89, 11.45], [48.48, 7.28]], [[16.86, -18.01], [14.45, -13.84], [19.26, -13.84], [16.86, -18.01]], [[6.03, -18.4], [3.62, -14.23], [8.43, -14.23], [6.03, -18.4]], [[8.13, -33.16], [5.73, -28.99], [10.54, -28.99], [8.13, -33.16]], [[10.49, -32.42], [12.9, -36.59], [8.08, -36.59], [10.49, -32.42]], [[16.75, -31.56], [19.16, -35.73], [14.35, -35.73], [16.75, -31.56]], [[13.68, -33.89], [11.27, -29.72], [16.09, -29.72], [13.68, -33.89]], [[13.74, -24.38], [16.14, -28.55], [11.33, -28.55], [13.74, -24.38]], [[5.71, -27.94], [3.31, -23.77], [8.12, -23.77], [5.71, -27.94]], [[-2.24, -21.38], [0.17, -25.54], [-4.64, -25.54], [-2.24, -21.38]], [[20.16, -14.39], [22.57, -18.56], [17.75, -18.56], [20.16, -14.39]], [[20.14, -23.47], [17.73, -19.3], [22.55, -19.3], [20.14, -23.47]], [[16.57, -28.09], [14.16, -23.93], [18.97, -23.93], [16.57, -28.09]], [[14.07, -14.87], [16.48, -19.04], [11.67, -19.04], [14.07, -14.87]], [[11.32, -18.91], [8.91, -14.74], [13.72, -14.74], [11.32, -18.91]], [[11.32, -19.28], [13.72, -23.45], [8.91, -23.45], [11.32, -19.28]], [[6.5, -19.28], [8.91, -23.45], [4.1, -23.45], [6.5, -19.28]], [[11.32, -27.62], [8.91, -23.45], [13.72, -23.45], [11.32, -27.62]], [[8.91, -23.45], [11.32, -27.62], [6.5, -27.62], [8.91, -23.45]], [[8.91, -23.45], [6.5, -19.28], [11.32, -19.28], [8.91, -23.45]], [[8.91, -15.12], [11.32, -19.28], [6.5, -19.28], [8.91, -15.12]], [[-13.42, -24.47], [-15.82, -20.3], [-11.01, -20.3], [-13.42, -24.47]], [[-27.22, -11.13], [-24.82, -15.3], [-29.63, -15.3], [-27.22, -11.13]], [[-24.38, -14.46], [-26.79, -10.29], [-21.98, -10.29], [-24.38, -14.46]], [[-21.81, -11.59], [-19.41, -15.76], [-24.22, -15.76], [-21.81, -11.59]], [[-16.84, -20.25], [-14.43, -24.42], [-19.24, -24.42], [-16.84, -20.25]], [[-19.22, -15.78], [-21.63, -11.61], [-16.81, -11.61], [-19.22, -15.78]], [[-21.65, -20.07], [-19.24, -24.24], [-24.05, -24.24], [-21.65, -20.07]], [[-30.04, -24.61], [-32.45, -20.44], [-27.63, -20.44], [-30.04, -24.61]], [[-30.44, -16], [-28.03, -20.17], [-32.84, -20.17], [-30.44, -16]], [[-26.95, -20.23], [-24.54, -24.4], [-29.36, -24.4], [-26.95, -20.23]], [[-19.24, -15.9], [-16.83, -20.07], [-21.65, -20.07], [-19.24, -15.9]], [[-21.65, -20.07], [-24.05, -15.9], [-19.24, -15.9], [-21.65, -20.07]], [[-19.24, -24.24], [-21.65, -20.07], [-16.83, -20.07], [-19.24, -24.24]], [[-24.32, -24.22], [-26.72, -20.05], [-21.91, -20.05], [-24.32, -24.22]], [[-21.8, -28.63], [-24.21, -24.46], [-19.4, -24.46], [-21.8, -28.63]], [[-19.36, -24.79], [-16.96, -28.95], [-21.77, -28.95], [-19.36, -24.79]], [[-27.88, -29.21], [-30.29, -25.04], [-25.47, -25.04], [-27.88, -29.21]], [[-19.84, -34.34], [-22.25, -30.17], [-17.44, -30.17], [-19.84, -34.34]], [[-24.39, -15.69], [-21.98, -19.86], [-26.8, -19.86], [-24.39, -15.69]], [[-16.39, -19.96], [-18.8, -15.79], [-13.98, -15.79], [-16.39, -19.96]], [[-14.91, -10.26], [-12.5, -14.43], [-17.32, -14.43], [-14.91, -10.26]], [[-12.28, -15.11], [-9.88, -19.28], [-14.69, -19.28], [-12.28, -15.11]], [[1.75, 4.49], [4.15, 0.32], [-0.66, 0.32], [1.75, 4.49]], [[-13.17, -0.65], [-10.77, -4.81], [-15.58, -4.81], [-13.17, -0.65]], [[-5.1, -4.77], [-7.51, -0.6], [-2.7, -0.6], [-5.1, -4.77]], [[-1.12, -1.76], [1.28, -5.93], [-3.53, -5.93], [-1.12, -1.76]], [[-10.56, -10.41], [-12.96, -6.24], [-8.15, -6.24], [-10.56, -10.41]], [[-6.9, -8.69], [-4.49, -12.86], [-9.31, -12.86], [-6.9, -8.69]], [[-1.23, -13.34], [-3.64, -9.17], [1.18, -9.17], [-1.23, -13.34]], [[-5.3, -20.42], [-7.71, -16.26], [-2.9, -16.26], [-5.3, -20.42]], [[2.2, -23.4], [-0.21, -19.23], [4.61, -19.23], [2.2, -23.4]], [[1.31, -13.13], [3.71, -17.29], [-1.1, -17.29], [1.31, -13.13]]];
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(216);
+	var content = __webpack_require__(217);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -23254,10 +23329,10 @@
 	}
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -23268,7 +23343,7 @@
 
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports) {
 
 	/*
@@ -23324,7 +23399,7 @@
 
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -23576,7 +23651,7 @@
 
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23604,11 +23679,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _static = __webpack_require__(220);
+	var _static = __webpack_require__(221);
 	
 	var _static2 = _interopRequireDefault(_static);
 	
-	var _loader = __webpack_require__(224);
+	var _loader = __webpack_require__(211);
 	
 	var _loader2 = _interopRequireDefault(_loader);
 	
@@ -23649,7 +23724,7 @@
 	}
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23663,11 +23738,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _marked = __webpack_require__(221);
+	var _marked = __webpack_require__(222);
 	
 	var _marked2 = _interopRequireDefault(_marked);
 	
-	__webpack_require__(222);
+	__webpack_require__(223);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23685,7 +23760,7 @@
 	}
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -24977,16 +25052,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(223);
+	var content = __webpack_require__(224);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25003,10 +25078,10 @@
 	}
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -25015,44 +25090,6 @@
 	
 	// exports
 
-
-/***/ },
-/* 224 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Loader;
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var containerStyle = {
-	  width: '100%',
-	  textAlign: 'center',
-	  paddingTop: '100px',
-	  height: '100vh'
-	};
-	
-	var imageStyle = {
-	  display: 'inline-block',
-	  width: '60px',
-	  height: '60px'
-	};
-	
-	function Loader(props) {
-	  return _react2.default.createElement(
-	    'div',
-	    { style: containerStyle, className: 'loader' },
-	    _react2.default.createElement('img', { style: imageStyle, src: '/images/loader/ripple.gif', alt: 'Loading icon' })
-	  );
-	}
 
 /***/ },
 /* 225 */
@@ -25397,7 +25434,7 @@
 	var content = __webpack_require__(229);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25417,7 +25454,7 @@
 /* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -25437,7 +25474,7 @@
 	var content = __webpack_require__(231);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25457,7 +25494,7 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -25567,7 +25604,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _loader = __webpack_require__(224);
+	var _loader = __webpack_require__(211);
 	
 	var _loader2 = _interopRequireDefault(_loader);
 	
@@ -39537,7 +39574,7 @@
 	var content = __webpack_require__(340);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -39557,7 +39594,7 @@
 /* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -39577,7 +39614,7 @@
 	var content = __webpack_require__(342);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -39597,7 +39634,7 @@
 /* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -39631,7 +39668,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _static = __webpack_require__(220);
+	var _static = __webpack_require__(221);
 	
 	var _static2 = _interopRequireDefault(_static);
 	
@@ -39768,11 +39805,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _static = __webpack_require__(220);
+	var _static = __webpack_require__(221);
 	
 	var _static2 = _interopRequireDefault(_static);
 	
-	var _loader = __webpack_require__(224);
+	var _loader = __webpack_require__(211);
 	
 	var _loader2 = _interopRequireDefault(_loader);
 	
@@ -40844,7 +40881,9 @@
 	module.exports = [{
 		"route": "/",
 		"componentName": "Welcome",
-		"props": {}
+		"props": {
+			"slug": "welcome"
+		}
 	}, {
 		"route": "/projects(/)",
 		"componentName": "Posts",
@@ -41083,7 +41122,7 @@
 	var content = __webpack_require__(360);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -41103,7 +41142,7 @@
 /* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -41131,6 +41170,9 @@
 	}, {
 		"name": "about",
 		"url": "/about"
+	}, {
+		"name": "now",
+		"url": "/now"
 	}];
 
 /***/ },
@@ -41143,7 +41185,7 @@
 	var content = __webpack_require__(363);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -41163,7 +41205,7 @@
 /* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -41364,7 +41406,7 @@
 	var content = __webpack_require__(369);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -41384,7 +41426,7 @@
 /* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -41404,7 +41446,7 @@
 	var content = __webpack_require__(371);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -41424,7 +41466,7 @@
 /* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
@@ -41444,7 +41486,7 @@
 	var content = __webpack_require__(373);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(218)(content, {});
+	var update = __webpack_require__(219)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -41464,7 +41506,7 @@
 /* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	exports.i(__webpack_require__(374), "");
 	
@@ -41478,7 +41520,7 @@
 /* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(217)();
+	exports = module.exports = __webpack_require__(218)();
 	// imports
 	
 	
