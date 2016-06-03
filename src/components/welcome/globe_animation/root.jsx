@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 
 import HarmonicOscillator from './harmonic_oscillator.js';
@@ -8,7 +8,7 @@ import polygons from './coordinates.json';
 
 const GRAPHICS_SIZE = 90;
 
-export default class Animation extends React.Component {
+export default class Animation extends Component {
 
   constructor(props) {
     super(props);
