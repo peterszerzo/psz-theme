@@ -150,9 +150,9 @@ export function SoundCloud(props) {
 }
 
 export function Falafel(props) {
-  const startY = 15;
   const height = 8;
-  const spacing = 20;
+  const spacing = 24;
+  const startY = (100 - (2 * spacing + 3 * height)) / 2;
   return (
     <svg viewBox="0 0 100 100">
       <g>
@@ -161,9 +161,10 @@ export function Falafel(props) {
           y={startY + 0}
           width="100"
           height={height}
+          rx="4"
         />
-        <rect x="0" y={startY + height + spacing} width="100" height={height} />
-        <rect x="0" y={startY + 2 * height + 2 * spacing} width="100" height={height} />
+      <rect x="0" y={startY + height + spacing} width="100" height={height} rx="4"/>
+      <rect x="0" y={startY + 2 * height + 2 * spacing} width="100" height={height} rx="4"/>
       </g>
     </svg>
   );

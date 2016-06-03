@@ -18,15 +18,14 @@ export default class Header extends Component {
   }
 
   render() {
-    const {windowWidth, windowHeight, scrollTop} = this.props.ui;
-    const {pathname} = this.props;
-    const isDiscrete = windowWidth < 600 || (([ '/projects', '/blog' ].indexOf(pathname) === -1) && (windowHeight > scrollTop));
+    const {windowHeight, scrollTop, scrollDirection} = this.props.ui;
     const isTransparent = windowHeight - 70 > scrollTop;
+    const isHidden = scrollDirection === 'down';
 
     const cls = classNames({
       'header': true,
-      'header--discrete': isDiscrete,
       'header--expanded': this.state.isExpanded,
+      'header--hidden': isHidden,
       'header--transparent': isTransparent
     });
 
@@ -45,19 +44,6 @@ export default class Header extends Component {
         />
       </header>
     );
-  }
-
-  renderList() {
-    return buttons.map((button, i) => {
-      const {url, name} = button;
-      return (
-        <li key={i} >
-          <a className='header__nav__item' href={url}>
-            { name }
-          </a>
-        </li>
-      );
-    });
   }
 
   toggleExpandedState() {

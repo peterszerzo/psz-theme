@@ -20,6 +20,7 @@ function getInitialUiState() {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
     scrollTop: 0,
+    scrollDirection: 'up',
     loadedImages: []
   };
 }

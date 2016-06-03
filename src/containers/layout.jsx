@@ -7,7 +7,7 @@ import * as components from '../components/index.js';
 import getRoute from '../routes/router.js';
 import Header from '../components/header/header.jsx';
 import Footer from '../components/footer/footer.jsx';
-import {setScrollTop} from '../actions/ui.js';
+import {setScroll} from '../actions/ui.js';
 
 class Layout extends Component {
 
@@ -44,7 +44,8 @@ class Layout extends Component {
 
   updateScrollTop(e) {
     const node = findDOMNode(this);
-    this.props.dispatch(setScrollTop(node.scrollTop));
+    const scrollDirection = (this.props.ui.scrollTop > node.scrollTop) ? 'up' : 'down';
+    this.props.dispatch(setScroll(node.scrollTop, scrollDirection));
   }
 
 }

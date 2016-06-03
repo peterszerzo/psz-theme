@@ -5,7 +5,7 @@
   $padding: 25px;
   width: 100%;
   // The 6px accounts for line height in the paragraph and makes sure the space at on the side and at the top are exactly the same. This looks great on small screens.
-  padding: ($padding - 6px) $padding;
+  padding: 40px $padding;
   margin: auto;
 
   p {
@@ -27,7 +27,9 @@
 
   blockquote {
     font-style: italic;
-    margin: 35px 0 35px 40px;
+    margin: 40px 0;
+    border-left: 3px solid $black;
+    padding-left: 15px;
   }
 
   ul {
@@ -47,8 +49,8 @@
   }
 
   a {
-    color: get-color(purple);
-    border-bottom: 1px solid get-color(purple);
+    color: $purple;
+    border-bottom: 1px solid $purple;
     opacity: 0.7;
 
     &:hover {

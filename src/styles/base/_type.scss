@@ -1,57 +1,68 @@
+@import '../mixins/manifest';
+
 * {
-	font-family: 'PT Sans';
-	font-weight: normal;
+  font-family: 'PT Sans';
+  font-weight: normal;
 }
 
 h1,
 h2,
 h3,
 h4 {
-	font-family: 'PT Sans';
+  font-family: 'PT Sans';
 }
 
 p,
 a,
 li {
-	font-family: 'PT Serif';
+  font-family: 'PT Serif';
 }
 
 p,
 a,
-li,
-code {
-	font-size: 22px;
+li {
+  font-size: 1rem;
+
+  @include bp-w(600px) {
+    font-size: 1.4rem;
+  }
+
+  code {
+    font-size: 1rem;
+
+    @include bp-w(600px) {
+      font-size: 1.4rem;
+    }
+  }
 }
 
 code {
-	font-family: "Courier New";
-	font-size: 18px;
-	padding: 0 4px;
-
-	p & {
-		font-size: 22px;
-	}
+  font-family: 'Courier New';
+  font-size: 1.1rem;
+  padding: 0 4px;
 }
 
 p,
 li {
-	line-height: 165%;
+  line-height: 1.65;
 }
 
-code { line-height: 135%; }
+code {
+  line-height: 1.35;
+}
 
 h1 {
-	font-size: 44px;
-	margin-top: 35px;
-	margin-bottom: 15px;
+  font-size: 2.8rem;
+  margin-top: 35px;
+  margin-bottom: 15px;
 }
 
 h2 {
-	font-size: 32px;
-	margin-top: 30px;
-	margin-bottom: 10px;
+  font-size: 2rem;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 h3 {
-	font-size: 26px;
+  font-size: 1.8rem;
 }

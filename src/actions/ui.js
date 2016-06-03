@@ -1,13 +1,16 @@
 import {
-  SET_SCROLL_TOP,
+  SET_SCROLL,
   SET_WINDOW_DIMENSIONS,
   SET_LOADED_IMAGE
 } from '../constants/actions.js';
 
-export function setScrollTop(scrollTop) {
+export function setScroll(scrollTop, scrollDirection) {
   return {
-    type: SET_SCROLL_TOP,
-    data: scrollTop
+    type: SET_SCROLL,
+    data: {
+      scrollTop,
+      scrollDirection
+    }
   };
 }
 

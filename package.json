@@ -47,7 +47,8 @@
     "postcss-loader": "^0.8.2",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.0",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "webpack-validator": "^2.1.2"
   },
   "dependencies": {
     "babel-polyfill": "^6.7.4",

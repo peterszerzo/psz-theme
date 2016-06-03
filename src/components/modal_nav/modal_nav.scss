@@ -11,28 +11,39 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.9);
 
+  @mixin expand {
+    @include bp-w(600px) {
+      @content;
+    }
+  }
+
   &__items {
     position: absolute;
-    top: $header-height;
-    right: 23px;
+    top: $header-height-small;
+    right: ($header-height-small - $icon-size-small) / 2;
+
+    @include expand {
+      top: $header-height;
+      right: ($header-height - $icon-size) / 2;
+    }
 
     li {
-      margin-top: 20px;
+      margin: 10px 0;
       text-align: right;
-
-      &:first-of-type {
-        margin-top: 0;
-      }
     }
   }
 
   &__item {
-    color: white;
-    @include font-size(28px);
+    color: $white;
+    font-size: 1.2rem;
     font-family: 'PT Sans';
 
     &--active {
       opacity: 1;
+    }
+
+    @include expand {
+      font-size: 1.8rem;
     }
   }
 }

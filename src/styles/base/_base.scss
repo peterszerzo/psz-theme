@@ -19,13 +19,13 @@ code {
 }
 
 pre {
-  background-color: transparentize(map-get($colors, purple), 0.9);
+  background-color: $purple-light-transparent;
   border-radius: 8px;
   padding: 20px;
 }
 
 a {
-  color: white;
+  color: $white;
   opacity: 0.6;
   text-decoration: none;
 

@@ -84,7 +84,7 @@
   &__subtitle {
     position: relative;
     padding: 0 30px;
-    color: white;
+    color: $white;
     width: 100%;
     text-align: center;
   }
@@ -130,7 +130,7 @@
     text-align: center;
     width: 100%;
     bottom: 0;
-    color: white;
+    color: $white;
   }
 
   &:after {

@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import autoprefixer from 'autoprefixer';
+import validate from 'webpack-validator';
 
 const {NODE_ENV} = process.env;
 
@@ -24,7 +25,7 @@ const productionPlugins = [
 
 const usedPlugins = NODE_ENV === 'development' ? [...corePlugins, ...developmentPlugins] : [...corePlugins, ...productionPlugins];
 
-export default {
+const config = {
   entry: [
     './src/index.js'
   ],
@@ -52,15 +53,17 @@ export default {
         test: /\.scss$/,
         loaders: ['style', 'css', 'postcss', 'sass']
       }
-    ],
-    postcss: () => {
-      return [
-        autoprefixer({
-          browsers: 'last 2 versions'
-        })
-      ];
-    }
+    ]
+  },
+  postcss() {
+    return [
+      autoprefixer({
+        browsers: 'last 2 versions'
+      })
+    ];
   },
   devtool: NODE_ENV === 'development' ? 'source-map' : null,
   plugins: usedPlugins
 };
+
+export default validate(config);

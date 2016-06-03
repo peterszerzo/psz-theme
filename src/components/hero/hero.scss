@@ -6,7 +6,7 @@
   width: 100vw;
   // Height set in JavaScript because of Mobile Safari bug.
   // height: 100vh;
-  color: white;
+  color: $white;
   @include standard-shadow;
 
   &__background,
@@ -27,7 +27,7 @@
 
   &__overlay {
     @include transition(all 0.5s);
-    background-color: map-get($colors, base);
+    background-color: $blue;
     opacity: 0.6;
   }
 
@@ -64,7 +64,7 @@
     left: 25px;
     font-family: 'PT Sans';
     font-weight: bold;
-    color: white;
+    color: $white;
     @include font-size(64px);
 
     @include bp-w(768px) {
@@ -86,7 +86,7 @@
     svg {
       width: $width;
       height: 50px;
-      fill: white;
+      fill: $white;
     }
 
     &:hover {

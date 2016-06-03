@@ -23,7 +23,6 @@
       "except": ["first-nested"],
       "ignore": ["after-comment"]
     }],
-    "selector-no-id": true,
     "selector-type-case": "lower",
     "selector-list-comma-newline-after": "always",
     "selector-combinator-space-after": "always",
