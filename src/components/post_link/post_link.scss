@@ -48,19 +48,12 @@
     margin-bottom: 0;
   }
 
-  &__background,
   &__overlay {
     bottom: 0;
     left: 0;
     position: absolute;
     right: 0;
     top: 0;
-  }
-
-  &__background {
-    filter: blur(3px);
-    background-position: 50% 50%;
-    background-size: 100%;
   }
 
   &__title,

@@ -20,7 +20,7 @@ export default class Header extends Component {
   render() {
     const {windowHeight, scrollTop, scrollDirection} = this.props.ui;
     const isTransparent = windowHeight - 70 > scrollTop;
-    const isHidden = scrollDirection === 'down';
+    const isHidden = (scrollTop > 0) && (scrollDirection === 'down');
 
     const cls = classNames({
       'header': true,

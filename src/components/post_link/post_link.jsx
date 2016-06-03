@@ -11,7 +11,6 @@ export default function PostLink(props) {
   const overlayClassName = classNames('post-link__overlay', `bg-c-${index % 10 + 1}`);
   return (
     <a key={index} className='post-link' href={viewUrl}>
-      <div className='post-link__background' style={{backgroundImage: `url(${post.image})`}} />
       <div className={overlayClassName}/>
       <p className='post-link__date'>{publishDate}</p>
       <div className='post-link__title-bar'>

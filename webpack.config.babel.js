@@ -62,7 +62,7 @@ const config = {
       })
     ];
   },
-  devtool: NODE_ENV === 'development' ? 'source-map' : null,
+  devtool: 'source-map',
   plugins: usedPlugins
 };
 
