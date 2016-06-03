@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {setUrl} from '../../actions/url.js';
 import Banner from './banner.jsx';
 import Loader from '../loader/loader.jsx';
-import Animation from './globe_animation/root.jsx';
+import Animation from './globe_animation/globe_animation.jsx';
 import siteInfo from '../../info.json';
 
 const FADE_OUT_IN = 4500;
