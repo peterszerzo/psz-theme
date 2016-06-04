@@ -8,7 +8,13 @@
   position: relative;
   overflow: hidden;
 
-  @include bp-w(600px) {
+  @mixin expand {
+    @include bp-w(600px) {
+      @content;
+    }
+  }
+
+  @include expand {
     padding: 90px 0;
   }
 
@@ -52,17 +58,19 @@
   }
 
   &__messages {
+    $ratio: 18;
     padding: 0 5px;
     position: absolute;
     display: flex;
     height: 100%;
     width: 100%;
-    top: 0;
+    top: - 15vw / $ratio;
     left: 0;
-    opacity: 0.06;
+    opacity: 0.08;
 
-    @include bp-w(600px) {
+    @include expand {
       padding: 0 40px;
+      top: -10vw / $ratio;
     }
 
     p {
@@ -70,6 +78,7 @@
       margin: auto;
       font-family: 'PT Sans';
       font-size: 15vw;
+
       line-height: 0.8;
       display: block;
       color: $white;
@@ -79,7 +88,7 @@
         font-weight: bold;
       }
 
-      @include bp-w(600px) {
+      @include expand {
         font-size: 10vw;
       }
     }

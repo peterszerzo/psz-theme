@@ -7,7 +7,6 @@
   // Height set in JavaScript because of Mobile Safari bug.
   // height: 100vh;
   color: $white;
-  @include standard-shadow;
 
   &__background,
   &__overlay,
