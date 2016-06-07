@@ -42,15 +42,7 @@ export default class Animation extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.transformedPolygons !== nextState.transformedPolygons);
-  }
-
-  componentDidUpdate() {
-    window.requestAnimationFrame(this.drawOnCanvas);
-  }
-
-  drawOnCanvas() {
+  drawOnCanvas(transformedPolygons) {
     let isMouseOverShape = false;
     const canvas = this.canvas;
     if (!canvas) {
@@ -58,7 +50,7 @@ export default class Animation extends Component {
     }
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
-    this.state.transformedPolygons.forEach(({transformedCoordinates, isHovered, opacity}) => {
+    transformedPolygons.forEach(({transformedCoordinates, isHovered, opacity}) => {
       context.beginPath();
       const displayOpacity = isHovered ? 1 : opacity;
       const rgb = isHovered ? [ 65, 52, 120 ] : [ 255, 255, 255 ];
@@ -100,9 +92,7 @@ export default class Animation extends Component {
     this.worker = new TransWorker();
     this.worker.onmessage = ({data}) => {
       this.lastWorkerResponse = new Date().getTime();
-      this.setState({
-        transformedPolygons: data
-      });
+      this.drawOnCanvas(data);
     };
     window.addEventListener('mousemove', this.setMousePosition);
     this.interval = setInterval(() => {

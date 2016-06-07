@@ -8,6 +8,12 @@
   padding: 40px $padding;
   margin: auto;
 
+  @mixin expand {
+    @include bp-w(768px + 2 * $padding) {
+      @content;
+    }
+  }
+
   p {
     &:first-child {
       padding-top: 0;
@@ -20,7 +26,7 @@
     }
   }
 
-  @include bp-w(768px + 2 * $padding) {
+  @include expand {
     width: 768px;
     padding: 50px 0;
   }
@@ -46,6 +52,14 @@
   li {
     display: list-item;
     padding: 5px 0;
+  }
+
+  ol li {
+    padding: 10px 5px;
+
+    @include expand {
+      padding: 15px 5px;
+    }
   }
 
   a {
