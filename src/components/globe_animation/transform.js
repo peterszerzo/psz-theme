@@ -36,7 +36,7 @@ function getIsHovered(transformedCoordinates, mouse) {
   return geoUtil.contains(transformedCoordinates, mouse);
 }
 
-export default function transformPolygon(coordinates, lightCentroid, dimensions, mouse) {
+function transformPolygon(coordinates, lightCentroid, dimensions, mouse) {
   const transformedCoordinates = getTransformedCoordinates(coordinates, lightCentroid, dimensions);
   const isHovered = getIsHovered(transformedCoordinates, mouse);
   return {

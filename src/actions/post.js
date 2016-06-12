@@ -31,6 +31,7 @@ export function requestPost(slug) {
           data: posts[0]
         });
       }).catch((err) => {
+        console.log(err.stack);
         dispatch({
           type: FETCH_POST,
           status: error,

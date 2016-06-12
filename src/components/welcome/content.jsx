@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {setUrl} from '../../actions/url.js';
 import Banner from './banner.jsx';
 import Loader from '../loader/loader.jsx';
-import Animation from './globe_animation/globe_animation.jsx';
+import GlobeAnimation from '../globe_animation/globe_animation.jsx';
 import siteInfo from '../../info.json';
 
 const FADE_OUT_IN = 4500;
@@ -37,7 +37,7 @@ export default class WelcomeContent extends Component {
       <div className='welcome'>
         <div className='welcome__background' style={{backgroundImage: `url(${imageUrl})`}}/>
         <div className='welcome__globe'>
-          <Animation
+          <GlobeAnimation
             width={ui.windowWidth}
             height={ui.windowHeight}
             navigateToRandomPost={this.navigateToRandomPost}

@@ -1,38 +1,27 @@
 import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 
-import HarmonicOscillator from './harmonic_oscillator.js';
 import polygons from './coordinates.json';
-import TransWorker from 'worker?inline!./transform_worker.js';
+import createAnimation from './animator.js';
 
-import {INTERVAL} from './constants.js';
-
-export default class Animation extends Component {
+export default class GlobeAnimation extends Component {
 
   constructor(props) {
     super(props);
     this.drawOnCanvas = this.drawOnCanvas.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setMousePosition = this.setMousePosition.bind(this);
+    this.setHovered = this.setHovered.bind(this);
     this.state = {
-      transformedPolygons: [],
-      mousePosition: [0, 0],
-      isMouseOverShape: false,
-      lastWorkerComputeTime: INTERVAL
+      isMouseOverShape: false
     };
-    this.eye = new HarmonicOscillator({
-      position: [0, 0],
-      velocity: [2, 4],
-      amplitude: [10, 10],
-      maxVelocity: [2, 4],
-      mass: 0.005
-    });
   }
 
   render() {
     const style = this.state.isMouseOverShape ? {cursor: 'pointer'} : {};
     return (
       <canvas
+        className='globe-animation'
         onClick={this.handleClick}
         style={style}
         width={this.props.width}
@@ -89,30 +78,29 @@ export default class Animation extends Component {
 
   componentDidMount() {
     this.canvas = findDOMNode(this.refs.canvas);
-    this.worker = new TransWorker();
-    this.worker.onmessage = ({data}) => {
-      this.lastWorkerResponse = new Date().getTime();
-      this.drawOnCanvas(data);
-    };
+    this.animation = createAnimation(this.canvas, {
+      setHovered: this.setHovered
+    });
+    this.animation.start();
     window.addEventListener('mousemove', this.setMousePosition);
-    this.interval = setInterval(() => {
-      this.eye = this.eye.getUpdatedClone(0.02);
-      this.requestTransformedCoordinates();
-    }, 15);
   }
 
   componentWillUnmount() {
+    this.animation.stop();
     window.removeEventListener('mousemove', this.setMousePosition);
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
   }
 
   setMousePosition(e) {
-    this.setState({
+    this.animation.sendMessage({
       mousePosition: [
         e.clientX, e.clientY
       ]
+    });
+  }
+
+  setHovered(isHovered) {
+    this.setState({
+      isMouseOverShape: isHovered
     });
   }
 

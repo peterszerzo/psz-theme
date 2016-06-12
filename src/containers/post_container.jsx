@@ -5,10 +5,6 @@ import {requestPost} from '../actions/post.js';
 
 class PostContainer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const post = this.getPost();
     return React.cloneElement(this.props.children, {
@@ -24,7 +20,7 @@ class PostContainer extends Component {
   getPost() {
     const {slug, postsBySlug} = this.props;
     const post = postsBySlug[slug];
-    return post ? post.data : null;
+    return (post && post.status === 'success') ? post.data : null;
   }
 }
 
