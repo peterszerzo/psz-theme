@@ -16,7 +16,7 @@ const imageStyle = {
 export default function Loader(props) {
   return (
     <div style={containerStyle} className='loader'>
-      <img style={imageStyle} src='/images/loader/ripple.gif' alt='Loading icon'/>
+      <img style={imageStyle} src='/assets/images/loader/ripple.gif' alt='Loading icon'/>
     </div>
   );
 }
